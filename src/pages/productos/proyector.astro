@@ -4,10 +4,10 @@ import Layout from '../../layouts/Layout.astro';
 
 <Layout title="Proyector Interactivo">
 
-  <!-- Contenedor con degradado en los bordes -->
+  <!-- Contenedor con degradado en los laterales: sin padding vertical -->
   <div class="page-gradient">
 
-    <!-- Contenedor central con fondo blanco -->
+    <!-- Contenedor central con fondo blanco (su altura depende del contenido) -->
     <div class="main-content">
 
       <!-- Hero Section -->
@@ -85,7 +85,12 @@ import Layout from '../../layouts/Layout.astro';
 
   <!-- Estilos adicionales -->
   <style>
-    /* 1. Reseteo básico del body */
+    :root {
+      --primary-color: #F05A28; /* naranja vibrante */
+      --secondary-color: #111111; /* prácticamente negro */
+    }
+
+    /* 1. Reset básico del body */
     body {
       margin: 0;
       padding: 0;
@@ -94,15 +99,15 @@ import Layout from '../../layouts/Layout.astro';
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
-    /* 2. Fondo degradado en los bordes (consistente con el resto de la web) */
+    /* 2. Fondo degradado en los laterales (solo padding horizontal para evitar degradado en la parte superior e inferior) */
     .page-gradient {
       width: 100%;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #C02425, #F0CB35);
-      padding: 2rem 0;
+      /* Se elimina el padding vertical para que el contenedor blanco toque el navbar y el footer */
+      padding: 0 2rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     }
 
-    /* 3. Contenedor principal con fondo blanco */
+    /* 3. Contenedor principal con fondo blanco; su altura depende del contenido */
     .main-content {
       max-width: 1200px;
       margin: 0 auto;
@@ -124,7 +129,7 @@ import Layout from '../../layouts/Layout.astro';
     
     /* Botón de acción (Contáctanos) */
     .contact-button {
-      background: #C02425;
+      background: var(--primary-color);
       color: #fff;
       text-decoration: none;
     }
@@ -132,5 +137,25 @@ import Layout from '../../layouts/Layout.astro';
       background: #F0CB35;
     }
   </style>
+
+  <!-- Script para actualizar el precio según tamaño -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sizeButtons = document.querySelectorAll('.size-button');
+      const priceValue = document.querySelector('.price-value');
+
+      sizeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Actualiza el precio
+          const newPrice = button.getAttribute('data-price');
+          priceValue.textContent = 'S./' + newPrice;
+
+          // Actualiza estado visual (botón seleccionado)
+          sizeButtons.forEach(btn => btn.classList.remove('active-size'));
+          button.classList.add('active-size');
+        });
+      });
+    });
+  </script>
 
 </Layout>

@@ -31,9 +31,18 @@ const models = [
 
 <Layout title="Pizarra Digital Interactiva">
 
-  <!-- Contenedor con fondo degradado en los costados -->
-  <div class="page-gradient">
-    <!-- Contenedor central con fondo blanco y separadores horizontales -->
+  <!-- Forzamos que el navbar (header) tenga fondo blanco -->
+  <style>
+    header {
+      background-color: #fff !important;
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+
+  <!-- El fondo del body muestra el degradado (en los laterales) -->
+  <!-- El contenedor principal se centra y el contenido interno es 100% blanco -->
+  <div class="page-container">
     <div class="main-content">
 
       <!-- Hero Section -->
@@ -41,9 +50,7 @@ const models = [
         <div class="hero-content">
           <h1>Pizarra Digital Interactiva</h1>
           <p>
-            La pizarra digital, también conocida como pizarra interactiva, es un recurso para el aula 
-            y funciona en conjunto con un ordenador y un proyector. 
-            Te permite manipular desde la superficie de la PDI el sistema operativo del computador.
+            La pizarra digital, también conocida como pizarra interactiva, es un recurso para el aula y funciona en conjunto con un ordenador y un proyector. Te permite manipular desde la superficie de la PDI el sistema operativo del computador.
           </p>
         </div>
       </section>
@@ -55,8 +62,7 @@ const models = [
           <div class="precio-info">
             <h2>PRECIOS DE PIZARRA INTERACTIVA</h2>
             <p>
-              La pizarra interactiva es un recurso para el aula que se usa en conjunto con PC y proyector. 
-              Seleccione el modelo para ver el precio y medidas.
+              La pizarra interactiva es un recurso para el aula que se usa en conjunto con PC y proyector. Seleccione el modelo para ver el precio y medidas.
             </p>
             <div class="price-box">
               <!-- Se muestra el precio del primer modelo por defecto -->
@@ -212,15 +218,15 @@ const models = [
               <tr>
                 <td>Pulgadas</td>
                 <td>
-                  82": Total 1700×1208, Superficie 1610×1127, Proyección 1520×1127, Accesos 1127×0045<br>
-                  92": Total 2017×1208, Superficie 1936×1127, Proyección 1846×1127, Accesos 1127×0045<br>
+                  82": Total 1700×1208, Superficie 1610×1127, Proyección 1520×1127, Accesos 1127×0045<br/>
+                  92": Total 2017×1208, Superficie 1936×1127, Proyección 1846×1127, Accesos 1284×0045<br/>
                   107": Total 2343×1365, Superficie 2262×1284, Proyección 2172×1284, Accesos 1284×0045
                 </td>
               </tr>
               <tr>
                 <td>Pedestal (opcional)</td>
                 <td>
-                  Pedestal simple: Metálico con acabado electrostático<br>
+                  Pedestal simple: Metálico con acabado electrostático<br/>
                   Pedestal eléctrico: Sistema de subida y bajada con control/pulsador
                 </td>
               </tr>
@@ -269,50 +275,48 @@ const models = [
       <section class="contenido-pizarra">
         <h2>Contenido de la Pizarra Digital Interactiva</h2>
         <div class="contenido-collage">
-          <!-- Imagen (collage) que agrupa todos los accesorios -->
-          <img 
-            src="/pizarra-interactiva.webp" 
-            alt="Collage de Contenido de la Pizarra Digital Interactiva" 
-          />
+          <img src="/pizarra-interactiva.webp" alt="Collage de Contenido de la Pizarra Digital Interactiva" />
         </div>
       </section>
 
-    </div> <!-- Fin main-content -->
-  </div> <!-- Fin page-gradient -->
+    </div>
+  </div>
 
-  <!-- Estilos específicos en CSS puro -->
+  <!-- Estilos generales -->
   <style>
-    /* ===== Reset / Base ===== */
+    :root {
+      --primary-color: #F05A28;
+      --secondary-color: #111111;
+    }
+    /* El body muestra el degradado en los laterales */
     body {
       margin: 0;
       padding: 0;
-      background: #f5f5f5; 
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: #333;
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
-
-    /* ===== Fondo degradado (Negroni Moderno) en los costados ===== */
-    .page-gradient {
+    /* La .page-container se extiende al 100% pero es transparente para dejar ver el degradado en los costados */
+    .page-container {
       width: 100%;
       min-height: 100vh;
-      background: linear-gradient(135deg, #C02425, #F0CB35);
-      padding: 2rem 0; 
+      background: transparent;
+      display: flex;
+      justify-content: center;
     }
-
-    /* ===== Contenedor central blanco con líneas horizontales separadoras ===== */
+    /* El contenedor principal es 100% blanco, sin margen superior para evitar ver cualquier línea del degradado entre el navbar y el contenido */
     .main-content {
-      max-width: 1200px;
-      margin: 0 auto;
       background: #fff;
+      width: 100%;
+      max-width: 1200px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
       border-radius: 8px;
       padding: 1rem 2rem;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-top: 4px solid;
-      border-bottom: 4px solid;
-      border-image: linear-gradient(90deg, #C02425, #F0CB35) 1;
+      border: 1px solid #ddd;
+      margin-top: 0;
     }
-
-    /* ===== Hero Section ===== */
     .hero {
       text-align: center;
       padding: 3rem 1rem;
@@ -327,8 +331,6 @@ const models = [
       max-width: 800px;
       margin: 0 auto;
     }
-
-    /* ===== Sección de Precios ===== */
     .precios-pizarra {
       padding: 2rem;
       display: flex;
@@ -350,7 +352,6 @@ const models = [
       font-size: 2rem;
       margin-bottom: 1rem;
     }
-    /* --- Se modifica la price-box para que el fondo sea negro y el texto se vea en blanco --- */
     .price-box {
       background: #000;
       padding: 1rem;
@@ -370,8 +371,6 @@ const models = [
       font-size: 0.9rem;
       color: #fff;
     }
-
-    /* Botones para seleccionar tamaño (se mantienen como estaban originalmente) */
     .size-selector {
       display: flex;
       gap: 1rem;
@@ -390,8 +389,6 @@ const models = [
     .size-selector button:hover {
       background: #FFA64D;
     }
-
-    /* Imagen pizarra */
     .pizarra-image {
       flex: 1;
       min-width: 300px;
@@ -406,8 +403,6 @@ const models = [
       font-size: 0.9rem;
       color: #555;
     }
-
-    /* ===== Tabs Section ===== */
     .tab-section {
       margin: 2rem auto;
       max-width: 1200px;
@@ -427,8 +422,8 @@ const models = [
       transition: color 0.3s;
     }
     .tab-button.active {
-      border-bottom: 2px solid #C02425;
-      color: #C02425;
+      border-bottom: 2px solid var(--primary-color);
+      color: var(--primary-color);
     }
     .tab-content .tab-panel {
       display: none;
@@ -436,8 +431,6 @@ const models = [
     .tab-content .tab-panel.active {
       display: block;
     }
-
-    /* Tablas dentro de cada tab */
     .tab-panel table {
       width: 100%;
       border-collapse: collapse;
@@ -456,8 +449,6 @@ const models = [
     .tab-panel th {
       background: #f9f9f9;
     }
-
-    /* ===== Sección Contenido Pizarra ===== */
     .contenido-pizarra {
       margin: 2rem auto;
       text-align: center;
@@ -473,7 +464,6 @@ const models = [
     }
   </style>
 
-  <!-- Script de interactividad -->
   <script client:load>
     document.addEventListener('DOMContentLoaded', () => {
       // Actualiza imagen, precio y dimensiones al hacer click en cada botón

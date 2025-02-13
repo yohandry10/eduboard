@@ -4,12 +4,10 @@ import Layout from '../../layouts/Layout.astro';
 
 <Layout title="Rack Empotrado">
 
-  <!-- Contenedor con fondo degradado a los lados -->
+  <!-- Fondo degradado en los bordes: solo padding horizontal -->
   <div class="page-gradient">
-
     <!-- Contenido centrado con fondo blanco -->
     <div class="main-content">
-
       <!-- Hero Section -->
       <div class="hero-section">
         <h1 class="hero-title">Rack Eléctrico para Proyector</h1>
@@ -53,34 +51,18 @@ import Layout from '../../layouts/Layout.astro';
         </div>
       </div>
 
-      <!-- Beneficios -->
-      <div class="benefits-section">
-        <h2 class="section-title">Ventajas del Rack Empotrado</h2>
-        <div class="benefits-grid">
-          <div class="benefit-card">
-            <h3 class="benefit-title">Estética Profesional</h3>
-            <p class="benefit-text">Se integra perfectamente con el diseño del ambiente</p>
-          </div>
-          <div class="benefit-card">
-            <h3 class="benefit-title">Seguridad</h3>
-            <p class="benefit-text">Protege su equipo de proyección</p>
-          </div>
-          <div class="benefit-card">
-            <h3 class="benefit-title">Facilidad de Uso</h3>
-            <p class="benefit-text">Control remoto para operación sencilla</p>
-          </div>
-        </div>
-      </div>
-
-    </div> 
+    </div>
     <!-- Fin .main-content -->
-
   </div>
   <!-- Fin .page-gradient -->
 
-
   <!-- Estilos en CSS puro -->
   <style>
+    :root {
+      --primary-color: #F05A28; /* naranja vibrante */
+      --secondary-color: #111111; /* prácticamente negro */
+    }
+
     /* 1) Ajustes base */
     body {
       margin: 0;
@@ -90,12 +72,12 @@ import Layout from '../../layouts/Layout.astro';
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
-    /* 2) Contenedor con degradado en los bordes */
+    /* 2) Fondo degradado en los bordes: se usa solo padding horizontal para que el degradado se vea únicamente en los laterales.
+         Se eliminan tanto el padding vertical como la altura mínima para que no aparezca degradado debajo del contenedor blanco. */
     .page-gradient {
       width: 100%;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #C02425, #F0CB35);
-      padding: 2rem 0; /* Espacio arriba/abajo */
+      padding: 0 2rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     }
 
     /* 3) Contenedor central con fondo blanco */
@@ -105,7 +87,7 @@ import Layout from '../../layouts/Layout.astro';
       background: #fff;
       border-radius: 8px;
       padding: 2rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra sutil */
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     /* Hero Section */
@@ -126,14 +108,14 @@ import Layout from '../../layouts/Layout.astro';
     /* Nueva fila de imágenes SIN bordes/carts */
     .image-row {
       display: flex;
-      flex-direction: column; /* Por defecto una debajo de la otra en pantallas pequeñas */
+      flex-direction: column; /* Por defecto en mobile */
       gap: 2rem; 
-      align-items: center; /* Centra las imágenes de forma horizontal */
+      align-items: center;
       margin-bottom: 4rem;
     }
     @media (min-width: 768px) {
       .image-row {
-        flex-direction: row; /* En pantallas medianas y +, lado a lado */
+        flex-direction: row;
         justify-content: center;
       }
     }
@@ -141,7 +123,6 @@ import Layout from '../../layouts/Layout.astro';
       width: auto; 
       max-width: 100%; 
       height: auto;
-      /* Sin bordes ni sombras */
     }
 
     /* Sección de Características */
@@ -149,6 +130,7 @@ import Layout from '../../layouts/Layout.astro';
       background: #fff;
       border-radius: 8px;
       margin-bottom: 4rem;
+      padding: 2rem;
     }
     .section-title {
       font-size: 1.75rem;
@@ -157,12 +139,12 @@ import Layout from '../../layouts/Layout.astro';
     }
     .features-grid {
       display: grid;
-      grid-template-columns: 1fr; /* 1 columna en mobile */
+      grid-template-columns: 1fr;
       gap: 1rem;
     }
     @media (min-width: 768px) {
       .features-grid {
-        grid-template-columns: 1fr 1fr; /* 2 columnas en pantallas medianas+ */
+        grid-template-columns: 1fr 1fr;
       }
     }
     .feature-item {
@@ -172,42 +154,11 @@ import Layout from '../../layouts/Layout.astro';
       margin-bottom: 0.5rem;
     }
     .checkmark {
-      color: #fc5e65; /* Color primario */
+      color: #fc5e65;
       font-weight: bold;
     }
     .feature-text {
       color: #555;
-    }
-
-    /* Sección de Beneficios */
-    .benefits-section {
-      background: #f9f9f9;   /* Equivalente a .bg-gray-50 */
-      border-radius: 8px;
-      padding: 2rem;
-    }
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: 1fr; /* 1 columna en mobile */
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    @media (min-width: 768px) {
-      .benefits-grid {
-        grid-template-columns: 1fr 1fr 1fr; /* 3 columnas en pantallas md+ */
-      }
-    }
-    .benefit-card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-      padding: 1rem;
-    }
-    .benefit-title {
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .benefit-text {
-      color: #666;
     }
   </style>
 

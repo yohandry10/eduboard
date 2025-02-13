@@ -3,12 +3,10 @@ import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout title="Pantallas Digitales Interactivas">
-  <!-- Fondo degradado en los bordes -->
+  <!-- Fondo degradado en los laterales: sin forzar altura mínima -->
   <div class="page-gradient">
-
-    <!-- Contenedor central con fondo blanco -->
+    <!-- Contenedor central con fondo blanco; su altura depende del contenido -->
     <div class="main-content">
-
       <!-- Hero Section -->
       <div class="hero-section">
         <h1 class="hero-title">Pantallas Digitales Interactivas</h1>
@@ -64,12 +62,10 @@ import Layout from '../../layouts/Layout.astro';
             </div>
           </div>
         </div>
-      </div> 
+      </div>
       <!-- Fin Modelo Básico -->
-
     </div>
     <!-- Fin main-content -->
-
   </div>
   <!-- Fin page-gradient -->
 
@@ -95,7 +91,11 @@ import Layout from '../../layouts/Layout.astro';
 
   <!-- Estilos en CSS puro -->
   <style>
-    /* Reset / base */
+    :root {
+      --primary-color: #F05A28; /* naranja vibrante */
+      --secondary-color: #111111; /* prácticamente negro */
+    }
+    /* Reset / Base */
     body {
       margin: 0;
       padding: 0;
@@ -104,22 +104,22 @@ import Layout from '../../layouts/Layout.astro';
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
-    /* 1) Fondo degradado en los bordes (consistente con el otro sitio) */
+    /* Fondo degradado: se aplica solo padding horizontal para que el degradado se vea en los laterales.
+       No se fuerza altura para que el fondo se ajuste a la altura del contenido. */
     .page-gradient {
       width: 100%;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #C02425, #F0CB35);
-      padding: 2rem 0; /* Espacio arriba/abajo */
+      padding: 0 2rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     }
 
-    /* 2) Contenedor central con fondo blanco */
+    /* Contenedor central blanco: su altura depende del contenido */
     .main-content {
       max-width: 1200px;
       margin: 0 auto;
       background: #fff;
       border-radius: 8px;
       padding: 2rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1); /* sombra sutil */
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
     /* Hero Section */
@@ -147,7 +147,7 @@ import Layout from '../../layouts/Layout.astro';
     }
     .product-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr; /* dos columnas */
+      grid-template-columns: 1fr 1fr;
       gap: 2rem;
     }
     .image-container {
@@ -164,7 +164,7 @@ import Layout from '../../layouts/Layout.astro';
       line-height: 1.5;
     }
 
-    /* Caja de precio: ahora con fondo negro y texto blanco para consistencia */
+    /* Caja de precio: fondo negro y texto blanco */
     .price-box {
       background: #000;
       color: #fff;
@@ -236,5 +236,4 @@ import Layout from '../../layouts/Layout.astro';
       font-weight: bold;
     }
   </style>
-
 </Layout>

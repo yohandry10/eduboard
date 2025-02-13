@@ -4,7 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 
 <Layout title="Ecran Eléctrico">
 
-  <!-- Fondo degradado -->
+  <!-- Fondo degradado (solo laterales) -->
   <div class="page-gradient">
     <!-- Contenedor central -->
     <div class="main-content">
@@ -217,6 +217,11 @@ import Layout from '../../layouts/Layout.astro';
 
   <!-- Estilos CSS -->
   <style>
+    :root {
+      --primary-color: #F05A28; /* naranja vibrante */
+      --secondary-color: #111111; /* prácticamente negro */
+    }
+
     /* Reset básico */
     body {
       margin: 0;
@@ -226,12 +231,12 @@ import Layout from '../../layouts/Layout.astro';
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 
-    /* Fondo degradado */
+    /* Fondo degradado: se aplica solo padding horizontal para que el degradado se vea únicamente en los laterales */
     .page-gradient {
       width: 100%;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #C02425, #F0CB35);
-      padding: 2rem 0;
+      /* Eliminamos el padding vertical para que el contenedor blanco toque el navbar y el footer */
+      padding: 0 2rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     }
 
     /* Contenedor central */
@@ -308,7 +313,6 @@ import Layout from '../../layouts/Layout.astro';
     .vertical-line-container {
       position: relative;
     }
-    /* La línea vertical se ubica en el centro horizontal de los círculos (50px/2=25px) */
     .vertical-line {
       position: absolute;
       left: 25px;
@@ -324,23 +328,19 @@ import Layout from '../../layouts/Layout.astro';
       padding: 0;
       position: relative;
     }
-    /* Para reducir la distancia total y acercar los círculos, usamos margen negativo */
     .sizes-list li {
       display: flex;
       align-items: center;
-      margin: -20px 0; /* Ajusta este valor según cuánta cercanía quieras */
+      margin: -20px 0;
       position: relative;
       z-index: 2;
     }
-    /* Evitar que el primero suba demasiado */
     .sizes-list li:first-child {
       margin-top: 0;
     }
     .sizes-list li:last-child {
       margin-bottom: 0;
     }
-
-    /* Círculos grandes (50x50) */
     .circle-container {
       width: 50px;
       height: 50px;
@@ -355,7 +355,6 @@ import Layout from '../../layouts/Layout.astro';
       border: 2px solid #ccc;
       border-radius: 50%;
     }
-
     .sizes-list li span {
       margin-left: 10px;
       font-size: 1rem;

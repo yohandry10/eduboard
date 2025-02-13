@@ -26,7 +26,7 @@ import Layout from '../layouts/Layout.astro';
   }
   /* Fondo degradado lateral (para secciones que lo requieran) */
   .section.gradient {
-    background: linear-gradient(to right, #C02425, #F0CB35);
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
   }
   /* Contenido central en fondo blanco */
   .content {
@@ -77,9 +77,18 @@ import Layout from '../layouts/Layout.astro';
     color: #666;
   }
 
+  /* --- Variables de color (nuevos gradientes) --- */
+  :root {
+    --primary-color: #F05A28; /* Naranja vibrante */
+    --secondary-color: #111111; /* Prácticamente negro */
+    --text-color: #333333;
+    --bg-color: #f5f5f5;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
   /* --- HERO --- */
   .hero {
-    background: linear-gradient(to right, #C02425, #F0CB35);
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
     color: white;
     text-align: center;
     padding: 80px 0;
@@ -316,250 +325,236 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Inicio">
   <!-- HERO SECTION -->
-<section class="hero section">
-  <!-- Slider de imágenes de fondo -->
-  <div class="hero__image-slider">
-    <img src="/public/PANTALLA1.webp" alt="Fondo 1" class="hero__image active">
-    <img src="/public/PANTALLA2.webp" alt="Fondo 2" class="hero__image">
-    <img src="/public/PANTALLA3.webp" alt="Fondo 3" class="hero__image">
-    
-    <!-- Flechas de navegación -->
-    <button class="hero__nav-button hero__nav-button--prev">‹</button>
-    <button class="hero__nav-button hero__nav-button--next">›</button>
-    
-    <!-- Contenedor de puntos -->
-    <div class="hero__dots-container">
-      <span class="hero__dot active"></span>
-      <span class="hero__dot"></span>
-      <span class="hero__dot"></span>
-    </div>
-  </div>
-
-  <div class="container">
-    <h1 class="section-title">Transformando la Educación con Tecnología Interactiva</h1>
-    <p>Especialistas en Pizarras Interactivas y soluciones multimedia para una educación moderna y efectiva.</p>
-    <!-- Botón del hero en negro -->
-  </div>
-
-  <div class="hero__content">
-    <!-- Contenedor que simula un botón para reproducir el video -->
-    <div class="video-button" id="open-video" role="button" tabindex="0">
-      <video autoplay loop muted playsinline class="video-button__video">
-        <source src="/12345.mp4" type="video/mp4" />
-        Tu navegador no soporta el elemento de video.
-      </video>
-      <img src="/svg2.svg" alt="Ícono de video" class="video-button__icon" />
-    </div>
-  </div>
-
-  <!-- Lightbox para el video -->
-  <div id="video-lightbox" class="video-lightbox">
-    <div class="video-container">
-      <button class="close-button" id="close-video">×</button>
-      <video id="lightbox-video" width="100%" height="auto" controls>
-        <source src="/12345.mp4" type="video/mp4" />
-        Tu navegador no soporta el elemento de video.
-      </video>
-    </div>
-  </div>
-
-  <style>
-    /* Estilos del hero */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-    }
-    /* Slider de imágenes de fondo */
-    .hero__image-slider {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 5;
-    }
-    .hero__image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
-    .hero__image.active {
-      opacity: 1;
-    }
-    .hero__nav-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.5);
-      border: none;
-      font-size: 2rem;
-      padding: 1rem;
-      cursor: pointer;
-      z-index: 10;
-    }
-    .hero__nav-button--prev {
-      left: 1rem;
-    }
-    .hero__nav-button--next {
-      right: 1rem;
-    }
-    .hero__dots-container {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 1rem;
-      z-index: 10;
-    }
-    .hero__dot {
-      width: 1rem;
-      height: 1rem;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.5);
-      cursor: pointer;
-    }
-    .hero__dot.active {
-      background: white;
-    }
-    .hero__content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 20;
-    }
-    /* Estilos del contenedor que simula el botón de video */
-    .video-button {
-      position: relative;
-      width: 160px;
-      height: 50px;
-      overflow: hidden;
-      border-radius: 25px;
-      cursor: pointer;
-      background-color: rgba(255, 255, 255, 0.3);
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .video-button:hover {
-      background-color: rgba(255, 255, 255, 0.5);
-      transform: scale(1.05);
-    }
-    .video-button__video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .video-button__icon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 1.5rem;
-      height: 1.5rem;
-      filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.7));
-      pointer-events: none;
-    }
-    /* Estilos del lightbox */
-    .video-lightbox {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      z-index: 1001;
-      align-items: center;
-      justify-content: center;
-    }
-    .video-lightbox.show {
-      display: flex;
-    }
-    .video-container {
-      position: relative;
-      width: 90%;
-      max-width: 800px;
-      background: #000;
-      border-radius: 10px;
-      overflow: hidden;
-      aspect-ratio: 16 / 9;
-    }
-    .video-container video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .close-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 2rem;
-      cursor: pointer;
-      z-index: 1002;
-    }
-  </style>
-
-  <script client:load>
-    // Se utiliza client:load para ejecutar el script en el cliente
-    function initHero() {
-      console.log("initHero se ha inicializado");
+  <section class="hero section">
+    <!-- Slider de imágenes de fondo -->
+    <div class="hero__image-slider">
+      <img src="/public/PANTALLA1.webp" alt="Fondo 1" class="hero__image active">
+      <img src="/public/PANTALLA2.webp" alt="Fondo 2" class="hero__image">
+      <img src="/public/PANTALLA3.webp" alt="Fondo 3" class="hero__image">
       
-      /* ==============================
-         Funcionalidad del Video & Lightbox
-         ============================== */
-      const videoButton = document.getElementById('open-video');
-      const videoLightbox = document.getElementById('video-lightbox');
-      const closeButton = document.getElementById('close-video');
-      const lightboxVideo = document.getElementById('lightbox-video');
+      <!-- Flechas de navegación -->
+      <button class="hero__nav-button hero__nav-button--prev">‹</button>
+      <button class="hero__nav-button hero__nav-button--next">›</button>
+      
+      <!-- Contenedor de puntos -->
+      <div class="hero__dots-container">
+        <span class="hero__dot active"></span>
+        <span class="hero__dot"></span>
+        <span class="hero__dot"></span>
+      </div>
+    </div>
 
-      if (videoButton && videoLightbox && closeButton && lightboxVideo) {
-        videoButton.addEventListener('click', (event) => {
-          event.preventDefault();
-          console.log("Se hizo clic en el contenedor del video");
-          videoLightbox.classList.add('show');
-          lightboxVideo.currentTime = 0; // Reinicia el video
-          lightboxVideo.play();
-          // Solicitar pantalla completa en el contenedor del lightbox
-          if (videoLightbox.requestFullscreen) {
-            videoLightbox.requestFullscreen();
-          } else if (videoLightbox.webkitRequestFullscreen) {
-            videoLightbox.webkitRequestFullscreen();
-          } else if (videoLightbox.msRequestFullscreen) {
-            videoLightbox.msRequestFullscreen();
-          }
-        });
-      
-        closeButton.addEventListener('click', () => {
-          console.log("Se hizo clic en el botón de cerrar");
-          videoLightbox.classList.remove('show');
-          lightboxVideo.pause();
-          if (document.fullscreenElement) {
-            document.exitFullscreen();
-          } else if (document.webkitFullscreenElement) {
-            document.webkitExitFullscreen();
-          } else if (document.msFullscreenElement) {
-            document.msExitFullscreen();
-          }
-        });
-      
-        videoLightbox.addEventListener('click', (event) => {
-          if (event.target === videoLightbox) {
-            console.log("Se hizo clic fuera del contenedor de video");
+    <div class="container">
+      <h1 class="section-title">Transformando la Educación con Tecnología Interactiva</h1>
+      <p>Especialistas en Pizarras Interactivas y soluciones multimedia para una educación moderna y efectiva.</p>
+      <!-- Botón del hero en negro -->
+    </div>
+
+    <div class="hero__content">
+      <!-- Contenedor que simula un botón para reproducir el video -->
+      <div class="video-button" id="open-video" role="button" tabindex="0">
+        <video autoplay loop muted playsinline class="video-button__video">
+          <source src="/12345.mp4" type="video/mp4" />
+          Tu navegador no soporta el elemento de video.
+        </video>
+        <img src="/svg2.svg" alt="Ícono de video" class="video-button__icon" />
+      </div>
+    </div>
+
+    <!-- Lightbox para el video -->
+    <div id="video-lightbox" class="video-lightbox">
+      <div class="video-container">
+        <button class="close-button" id="close-video">×</button>
+        <video id="lightbox-video" width="100%" height="auto" controls>
+          <source src="/12345.mp4" type="video/mp4" />
+          Tu navegador no soporta el elemento de video.
+        </video>
+      </div>
+    </div>
+
+    <style>
+      /* Estilos del hero */
+      .hero {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+      }
+      /* Slider de imágenes de fondo */
+      .hero__image-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 5;
+      }
+      .hero__image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .hero__image.active {
+        opacity: 1;
+      }
+      .hero__nav-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        font-size: 2rem;
+        padding: 1rem;
+        cursor: pointer;
+        z-index: 10;
+      }
+      .hero__nav-button--prev {
+        left: 1rem;
+      }
+      .hero__nav-button--next {
+        right: 1rem;
+      }
+      .hero__dots-container {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 1rem;
+        z-index: 10;
+      }
+      .hero__dot {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+      }
+      .hero__dot.active {
+        background: white;
+      }
+      .hero__content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 20;
+      }
+      /* Estilos del contenedor que simula el botón de video */
+      .video-button {
+        position: relative;
+        width: 160px;
+        height: 50px;
+        overflow: hidden;
+        border-radius: 25px;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .video-button:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1.05);
+      }
+      .video-button__video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .video-button__icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 1.5rem;
+        height: 1.5rem;
+        filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.7));
+        pointer-events: none;
+      }
+      /* Estilos del lightbox */
+      .video-lightbox {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1001;
+        align-items: center;
+        justify-content: center;
+      }
+      .video-lightbox.show {
+        display: flex;
+      }
+      .video-container {
+        position: relative;
+        width: 90%;
+        max-width: 800px;
+        background: #000;
+        border-radius: 10px;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+      }
+      .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 1002;
+      }
+    </style>
+
+    <script client:load>
+      // Se utiliza client:load para ejecutar el script en el cliente
+      function initHero() {
+        console.log("initHero se ha inicializado");
+        
+        /* ==============================
+           Funcionalidad del Video & Lightbox
+           ============================== */
+        const videoButton = document.getElementById('open-video');
+        const videoLightbox = document.getElementById('video-lightbox');
+        const closeButton = document.getElementById('close-video');
+        const lightboxVideo = document.getElementById('lightbox-video');
+
+        if (videoButton && videoLightbox && closeButton && lightboxVideo) {
+          videoButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            console.log("Se hizo clic en el contenedor del video");
+            videoLightbox.classList.add('show');
+            lightboxVideo.currentTime = 0; // Reinicia el video
+            lightboxVideo.play();
+            // Solicitar pantalla completa en el contenedor del lightbox
+            if (videoLightbox.requestFullscreen) {
+              videoLightbox.requestFullscreen();
+            } else if (videoLightbox.webkitRequestFullscreen) {
+              videoLightbox.webkitRequestFullscreen();
+            } else if (videoLightbox.msRequestFullscreen) {
+              videoLightbox.msRequestFullscreen();
+            }
+          });
+        
+          closeButton.addEventListener('click', () => {
+            console.log("Se hizo clic en el botón de cerrar");
             videoLightbox.classList.remove('show');
             lightboxVideo.pause();
             if (document.fullscreenElement) {
@@ -569,68 +564,82 @@ import Layout from '../layouts/Layout.astro';
             } else if (document.msFullscreenElement) {
               document.msExitFullscreen();
             }
+          });
+        
+          videoLightbox.addEventListener('click', (e) => {
+            if (e.target === videoLightbox) {
+              console.log("Se hizo clic fuera del contenedor de video");
+              videoLightbox.classList.remove('show');
+              lightboxVideo.pause();
+              if (document.fullscreenElement) {
+                document.exitFullscreen();
+              } else if (document.webkitFullscreenElement) {
+                document.webkitExitFullscreen();
+              } else if (document.msFullscreenElement) {
+                document.msExitFullscreen();
+              }
+            }
+          });
+        } else {
+          console.error("No se encontraron uno o más elementos necesarios para el video.");
+        }
+        
+        /* ==============================
+           Funcionalidad del Slider de Imágenes
+           ============================== */
+        const sliderImages = document.querySelectorAll('.hero__image');
+        const nextButton = document.querySelector('.hero__nav-button--next');
+        const prevButton = document.querySelector('.hero__nav-button--prev');
+        const dots = document.querySelectorAll('.hero__dot');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+          sliderImages.forEach((img, i) => {
+            img.classList.toggle('active', i === index);
+          });
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+          currentSlide = index;
+        }
+        
+        function nextSlide() {
+          let next = currentSlide + 1;
+          if (next >= sliderImages.length) {
+            next = 0;
           }
-        });
-      } else {
-        console.error("No se encontraron uno o más elementos necesarios para el video.");
-      }
-      
-      /* ==============================
-         Funcionalidad del Slider de Imágenes
-         ============================== */
-      const sliderImages = document.querySelectorAll('.hero__image');
-      const nextButton = document.querySelector('.hero__nav-button--next');
-      const prevButton = document.querySelector('.hero__nav-button--prev');
-      const dots = document.querySelectorAll('.hero__dot');
-      let currentSlide = 0;
-      
-      function showSlide(index) {
-        sliderImages.forEach((img, i) => {
-          img.classList.toggle('active', i === index);
-        });
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === index);
-        });
-        currentSlide = index;
-      }
-      
-      function nextSlide() {
-        let next = currentSlide + 1;
-        if (next >= sliderImages.length) {
-          next = 0;
+          showSlide(next);
         }
-        showSlide(next);
-      }
-      
-      function prevSlide() {
-        let prev = currentSlide - 1;
-        if (prev < 0) {
-          prev = sliderImages.length - 1;
+        
+        function prevSlide() {
+          let prev = currentSlide - 1;
+          if (prev < 0) {
+            prev = sliderImages.length - 1;
+          }
+          showSlide(prev);
         }
-        showSlide(prev);
-      }
-      
-      if (nextButton) {
-        nextButton.addEventListener('click', nextSlide);
-      }
-      if (prevButton) {
-        prevButton.addEventListener('click', prevSlide);
-      }
-      
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-          showSlide(index);
+        
+        if (nextButton) {
+          nextButton.addEventListener('click', nextSlide);
+        }
+        if (prevButton) {
+          prevButton.addEventListener('click', prevSlide);
+        }
+        
+        dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            showSlide(index);
+          });
         });
-      });
-      
-      // Cambio automático de slide cada 5 segundos
-      setInterval(nextSlide, 5000);
-    }
+        
+        // Cambio automático de slide cada 5 segundos
+        setInterval(nextSlide, 5000);
+      }
 
-    // Inicializar el hero cuando el DOM esté completamente cargado
-    document.addEventListener('DOMContentLoaded', initHero);
-  </script>
-</section>
+      // Inicializar el hero cuando el DOM esté completamente cargado
+      document.addEventListener('DOMContentLoaded', initHero);
+    </script>
+  </section>
 
   <!-- CARACTERÍSTICAS (50% texto – 50% imagen) -->
   <section class="section gradient">
@@ -774,158 +783,157 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
   </section>
-<!-- GALERÍA -->
-<section class="section gallery-section">
-  <div class="container">
-    <h1 class="section-title">Galería</h1>
-    <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="/public/galeria.webp" alt="Imagen 1">
-        <div class="overlay"><span>Ver Imagen</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="/public/galeria2.webp" alt="Imagen 2">
-        <div class="overlay"><span>Ver Imagen</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="/public/galeria3.webp" alt="Imagen 3">
-        <div class="overlay"><span>Ver Imagen</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="/public/galeria4.jpeg" alt="Imagen 4">
-        <div class="overlay"><span>Ver Imagen</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="/public/galeria4.jpeg" alt="Imagen 4">
-        <div class="overlay"><span>Ver Imagen</span></div>
-      </div>
-      <div class="gallery-item">
-        <img src="/public/galeria4.jpeg" alt="Imagen 4">
-        <div class="overlay"><span>Ver Imagen</span></div>
+  <!-- GALERÍA -->
+  <section class="section gallery-section">
+    <div class="container">
+      <h1 class="section-title">Galería</h1>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="/public/galeria.webp" alt="Imagen 1">
+          <div class="overlay"><span>Ver Imagen</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="/public/galeria2.webp" alt="Imagen 2">
+          <div class="overlay"><span>Ver Imagen</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="/public/galeria3.webp" alt="Imagen 3">
+          <div class="overlay"><span>Ver Imagen</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="/public/galeria4.jpeg" alt="Imagen 4">
+          <div class="overlay"><span>Ver Imagen</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="/public/galeria4.jpeg" alt="Imagen 4">
+          <div class="overlay"><span>Ver Imagen</span></div>
+        </div>
+        <div class="gallery-item">
+          <img src="/public/galeria4.jpeg" alt="Imagen 4">
+          <div class="overlay"><span>Ver Imagen</span></div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Lightbox para ampliar imágenes -->
-  <div class="lightbox" id="lightbox">
-    <span class="close" id="lightbox-close">&times;</span>
-    <img class="lightbox-content" id="lightbox-content">
-  </div>
+    <!-- Lightbox para ampliar imágenes -->
+    <div class="lightbox" id="lightbox">
+      <span class="close" id="lightbox-close">&times;</span>
+      <img class="lightbox-content" id="lightbox-content">
+    </div>
 
-  <style>
-    /* Sección de Galería */
-    .gallery-section {
-      padding: 2rem 0;
-      background: #f9f9f9;
-    }
-    .gallery-section .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 15px;
-      margin-top: 2rem;
-    }
-    .gallery-item {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 16 / 9;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
-    }
-    .gallery-item:hover img {
-      transform: scale(1.1);
-    }
-    .overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.2);
-      opacity: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.4s ease;
-    }
-    .gallery-item:hover .overlay {
-      opacity: 1;
-    }
-    .overlay span {
-      color: #fff;
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 8px 16px;
-      border-radius: 4px;
-      text-transform: uppercase;
-    }
+    <style>
+      /* Sección de Galería */
+      .gallery-section {
+        padding: 2rem 0;
+        background: #f9f9f9;
+      }
+      .gallery-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+        margin-top: 2rem;
+      }
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+      .gallery-item:hover img {
+        transform: scale(1.1);
+      }
+      .overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.4s ease;
+      }
+      .gallery-item:hover .overlay {
+        opacity: 1;
+      }
+      .overlay span {
+        color: #fff;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-transform: uppercase;
+      }
 
-    /* Estilos del Lightbox */
-    .lightbox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    .lightbox-content {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 8px;
-      object-fit: contain;
-    }
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2.5rem;
-      color: #fff;
-      cursor: pointer;
-      z-index: 1001;
-    }
-  </style>
+      /* Estilos del Lightbox */
+      .lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      .lightbox-content {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 8px;
+        object-fit: contain;
+      }
+      .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 2.5rem;
+        color: #fff;
+        cursor: pointer;
+        z-index: 1001;
+      }
+    </style>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const galleryItems = document.querySelectorAll('.gallery-item');
-      const lightbox = document.getElementById('lightbox');
-      const lightboxContent = document.getElementById('lightbox-content');
-      const lightboxClose = document.getElementById('lightbox-close');
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxContent = document.getElementById('lightbox-content');
+        const lightboxClose = document.getElementById('lightbox-close');
 
-      galleryItems.forEach(item => {
-        item.addEventListener('click', () => {
-          const imgSrc = item.querySelector('img').src;
-          lightboxContent.src = imgSrc;
-          lightbox.style.display = 'flex';
+        galleryItems.forEach(item => {
+          item.addEventListener('click', () => {
+            const imgSrc = item.querySelector('img').src;
+            lightboxContent.src = imgSrc;
+            lightbox.style.display = 'flex';
+          });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+          lightbox.style.display = 'none';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
+            lightbox.style.display = 'none';
+          }
         });
       });
-
-      lightboxClose.addEventListener('click', () => {
-        lightbox.style.display = 'none';
-      });
-
-      lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) {
-          lightbox.style.display = 'none';
-        }
-      });
-    });
-  </script>
-</section>
-
+    </script>
+  </section>
 
   <!-- TABS: DOCENTES / ALUMNOS -->
   <section class="section">
