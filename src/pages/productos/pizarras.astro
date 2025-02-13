@@ -1,0 +1,516 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const models = [
+  {
+    size: "EDU69",
+    price: 2300,
+    dimensions: "Área total: 1.41 × 1.08 (m) / Área efectiva: 1.20 × 0.967 (m)",
+    image: "/69.webp"
+  },
+  {
+    size: "EDU82",
+    price: 2800,
+    dimensions: "Área total: 1.70 × 1.20 (m) / Área efectiva: 1.62 × 1.12 (m)",
+    image: "/82.webp"
+  },
+  {
+    size: "EDU92",
+    price: 3800,
+    dimensions: "Área total: 2.01 × 1.20 (m) / Área efectiva: 1.93 × 1.12 (m)",
+    image: "/92.webp"
+  },
+  {
+    size: "EDU108",
+    price: 3800,
+    dimensions: "Área total: 2.39 × 1.39 (m) / Área efectiva: 2.29 × 1.31 (m)",
+    image: "/107.webp"
+  }
+];
+---
+
+<Layout title="Pizarra Digital Interactiva">
+
+  <!-- Contenedor con fondo degradado en los costados -->
+  <div class="page-gradient">
+    <!-- Contenedor central con fondo blanco y separadores horizontales -->
+    <div class="main-content">
+
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1>Pizarra Digital Interactiva</h1>
+          <p>
+            La pizarra digital, también conocida como pizarra interactiva, es un recurso para el aula 
+            y funciona en conjunto con un ordenador y un proyector. 
+            Te permite manipular desde la superficie de la PDI el sistema operativo del computador.
+          </p>
+        </div>
+      </section>
+
+      <!-- Sección: Precios de Pizarra Interactiva -->
+      <section class="precios-pizarra">
+        <div class="precios-container">
+          <!-- Columna Izquierda: Info y Botones -->
+          <div class="precio-info">
+            <h2>PRECIOS DE PIZARRA INTERACTIVA</h2>
+            <p>
+              La pizarra interactiva es un recurso para el aula que se usa en conjunto con PC y proyector. 
+              Seleccione el modelo para ver el precio y medidas.
+            </p>
+            <div class="price-box">
+              <!-- Se muestra el precio del primer modelo por defecto -->
+              <span class="precio-actual" id="precio-actual">{models[0].price} soles</span>
+              <span class="precio-note">Precio con IGV</span>
+            </div>
+            <div class="size-selector">
+              {models.map((model, index) => (
+                <button 
+                  data-size={model.size}
+                  data-price={model.price}
+                  data-dimensions={model.dimensions}
+                  data-image={model.image}
+                  id={`btn-${model.size}`}
+                  class={index === 0 ? "active" : ""}
+                >
+                  {model.size}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Imagen + Dimensiones -->
+          <div class="pizarra-image">
+            <img 
+              src={models[0].image} 
+              alt={`Pizarra Interactiva ${models[0].size}`} 
+              id="pizarra-image"
+            />
+            <div class="pizarra-dimensions" id="pizarra-dimensions">
+              {models[0].dimensions}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección: Tabs (Ficha, Características, Soporte) -->
+      <section class="tab-section">
+        <div class="tabs">
+          <button class="tab-button active" data-tab="ficha">Ficha</button>
+          <button class="tab-button" data-tab="caracteristicas">Características</button>
+          <button class="tab-button" data-tab="soporte">Soporte</button>
+        </div>
+        <div class="tab-content">
+          <!-- Panel Ficha -->
+          <div class="tab-panel active" id="tab-ficha">
+            <h3>Ficha Técnica</h3>
+            <table>
+              <tr>
+                <th colspan="2">General</th>
+              </tr>
+              <tr>
+                <td>Tecnología Táctil</td>
+                <td>Infrarrojo</td>
+              </tr>
+              <tr>
+                <td>Soporte Táctil</td>
+                <td>20 puntos táctiles</td>
+              </tr>
+              <tr>
+                <td>Modo Táctil</td>
+                <td>Modo navegación y modo aplicación</td>
+              </tr>
+              <tr>
+                <td>Reconocimiento Táctil</td>
+                <td>Cualquier objeto</td>
+              </tr>
+              <tr>
+                <td>Accesos directos</td>
+                <td>20 accesos directos</td>
+              </tr>
+              <tr>
+                <th colspan="2">Rendimiento</th>
+              </tr>
+              <tr>
+                <td>Resolución (interpolación)</td>
+                <td>32767×32767</td>
+              </tr>
+              <tr>
+                <td>Error</td>
+                <td>1.2mm, &lt;8ms</td>
+              </tr>
+              <tr>
+                <th colspan="2">Mecánico</th>
+              </tr>
+              <tr>
+                <td>Métodos de entrada</td>
+                <td>Dedo u objeto opaco</td>
+              </tr>
+              <tr>
+                <td>Tiempo de contacto</td>
+                <td>Sin límite</td>
+              </tr>
+              <tr>
+                <td>Fuerza de activación táctil</td>
+                <td>No necesita presión</td>
+              </tr>
+              <tr>
+                <td>Objeto táctil mínimo</td>
+                <td>5mm</td>
+              </tr>
+              <tr>
+                <th colspan="2">Conexión</th>
+              </tr>
+              <tr>
+                <td>Comunicación de Datos</td>
+                <td>Puerto único USB</td>
+              </tr>
+              <tr>
+                <td>Alimentación Eléctrica</td>
+                <td>&lt;5v (por el mismo USB)</td>
+              </tr>
+              <tr>
+                <th colspan="2">Ambiente</th>
+              </tr>
+              <tr>
+                <td>Temperatura (Funcionamiento)</td>
+                <td>-20 °C ~ 70 °C</td>
+              </tr>
+              <tr>
+                <td>Almacenamiento</td>
+                <td>-40 °C ~ 85 °C</td>
+              </tr>
+              <tr>
+                <td>Humedad relativa</td>
+                <td>60% (sin condensación a 40 °C)</td>
+              </tr>
+              <tr>
+                <th colspan="2">Eléctrico</th>
+              </tr>
+              <tr>
+                <td>Voltaje de funcionamiento</td>
+                <td>+DC 5V, +4.75V ~ +5.25V</td>
+              </tr>
+              <tr>
+                <td>Fuente de alimentación</td>
+                <td>por el mismo USB</td>
+              </tr>
+              <tr>
+                <td>Poder</td>
+                <td>~200mA</td>
+              </tr>
+              <tr>
+                <th colspan="2">Certificaciones</th>
+              </tr>
+              <tr>
+                <td>Componentes electrónicos</td>
+                <td>CE, FCC Clase B</td>
+              </tr>
+              <tr>
+                <th colspan="2">Dimensiones</th>
+              </tr>
+              <tr>
+                <td>Pulgadas</td>
+                <td>
+                  82": Total 1700×1208, Superficie 1610×1127, Proyección 1520×1127, Accesos 1127×0045<br>
+                  92": Total 2017×1208, Superficie 1936×1127, Proyección 1846×1127, Accesos 1127×0045<br>
+                  107": Total 2343×1365, Superficie 2262×1284, Proyección 2172×1284, Accesos 1284×0045
+                </td>
+              </tr>
+              <tr>
+                <td>Pedestal (opcional)</td>
+                <td>
+                  Pedestal simple: Metálico con acabado electrostático<br>
+                  Pedestal eléctrico: Sistema de subida y bajada con control/pulsador
+                </td>
+              </tr>
+              <tr>
+                <td>Garantía</td>
+                <td>Extendida: 2 años</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Panel Características -->
+          <div class="tab-panel" id="tab-caracteristicas">
+            <h3>Características Destacadas</h3>
+            <ul>
+              <li>20 puntos táctiles (20 usuarios pueden escribir simultáneamente)</li>
+              <li>Se alimenta solo con 5 voltios (USB estándar)</li>
+              <li>Operado directamente con dedos o lápices electrónicos</li>
+              <li>Superficie de gran durabilidad con acabado blanco mate anti-reflectante</li>
+              <li>Compatible con casi cualquier software y hardware</li>
+              <li>Resiste condiciones extremas: -20º a 50º C y 20% a 90% de humedad</li>
+              <li>Control multitáctil nativo en Windows 7, 8, 10</li>
+              <li>20 accesos directos para herramientas y apps</li>
+              <li>Reconoce dos formas de borrado (por objeto y por punto)</li>
+              <li>Capacitación impartida por personal especializado</li>
+              <li>Garantía de 3 años en planta</li>
+              <li>No requiere presión excesiva para activación</li>
+            </ul>
+          </div>
+
+          <!-- Panel Soporte -->
+          <div class="tab-panel" id="tab-soporte">
+            <h3>Soporte</h3>
+            <p>Para consultas técnicas y soporte, contacte a nuestro equipo de atención al cliente.</p>
+            <ul>
+              <li>Teléfono: 923 932 995</li>
+              <li>Email: manue****@eduboard.pe</li>
+              <li>
+                WhatsApp: <a href="https://wa.me/51923932995" target="_blank">WhatsApp</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección: Contenido de la Pizarra Digital Interactiva (Collage) -->
+      <section class="contenido-pizarra">
+        <h2>Contenido de la Pizarra Digital Interactiva</h2>
+        <div class="contenido-collage">
+          <!-- Imagen (collage) que agrupa todos los accesorios -->
+          <img 
+            src="/pizarra-interactiva.webp" 
+            alt="Collage de Contenido de la Pizarra Digital Interactiva" 
+          />
+        </div>
+      </section>
+
+    </div> <!-- Fin main-content -->
+  </div> <!-- Fin page-gradient -->
+
+  <!-- Estilos específicos en CSS puro -->
+  <style>
+    /* ===== Reset / Base ===== */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5; 
+      color: #333;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    /* ===== Fondo degradado (Negroni Moderno) en los costados ===== */
+    .page-gradient {
+      width: 100%;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #C02425, #F0CB35);
+      padding: 2rem 0; 
+    }
+
+    /* ===== Contenedor central blanco con líneas horizontales separadoras ===== */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: 1rem 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-top: 4px solid;
+      border-bottom: 4px solid;
+      border-image: linear-gradient(90deg, #C02425, #F0CB35) 1;
+    }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    .hero-content h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #555;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* ===== Sección de Precios ===== */
+    .precios-pizarra {
+      padding: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin: 2rem auto;
+    }
+    .precios-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      width: 100%;
+    }
+    .precio-info {
+      flex: 1;
+      min-width: 300px;
+    }
+    .precio-info h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    /* --- Se modifica la price-box para que el fondo sea negro y el texto se vea en blanco --- */
+    .price-box {
+      background: #000;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      text-align: center;
+      border: 1px solid #ddd;
+      color: #fff;
+    }
+    .precio-actual {
+      font-size: 2rem;
+      font-weight: bold;
+      display: block;
+      color: #fff;
+    }
+    .precio-note {
+      font-size: 0.9rem;
+      color: #fff;
+    }
+
+    /* Botones para seleccionar tamaño (se mantienen como estaban originalmente) */
+    .size-selector {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .size-selector button {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .size-selector button.active,
+    .size-selector button:hover {
+      background: #FFA64D;
+    }
+
+    /* Imagen pizarra */
+    .pizarra-image {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+    .pizarra-image img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .pizarra-dimensions {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    /* ===== Tabs Section ===== */
+    .tab-section {
+      margin: 2rem auto;
+      max-width: 1200px;
+    }
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 2px solid #ddd;
+      margin-bottom: 1rem;
+    }
+    .tab-button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    .tab-button.active {
+      border-bottom: 2px solid #C02425;
+      color: #C02425;
+    }
+    .tab-content .tab-panel {
+      display: none;
+    }
+    .tab-content .tab-panel.active {
+      display: block;
+    }
+
+    /* Tablas dentro de cada tab */
+    .tab-panel table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    .tab-panel table,
+    .tab-panel th,
+    .tab-panel td {
+      border: 1px solid #ddd;
+    }
+    .tab-panel th,
+    .tab-panel td {
+      padding: 0.5rem;
+      text-align: left;
+    }
+    .tab-panel th {
+      background: #f9f9f9;
+    }
+
+    /* ===== Sección Contenido Pizarra ===== */
+    .contenido-pizarra {
+      margin: 2rem auto;
+      text-align: center;
+    }
+    .contenido-collage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .contenido-collage img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+  </style>
+
+  <!-- Script de interactividad -->
+  <script client:load>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Actualiza imagen, precio y dimensiones al hacer click en cada botón
+      const sizeButtons = document.querySelectorAll('.size-selector button');
+      const precioActual = document.getElementById('precio-actual');
+      const pizarraDimensions = document.getElementById('pizarra-dimensions');
+      const pizarraImage = document.getElementById('pizarra-image');
+
+      sizeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          sizeButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const newPrice = btn.getAttribute('data-price');
+          const newDimensions = btn.getAttribute('data-dimensions');
+          const newImage = btn.getAttribute('data-image');
+
+          if (precioActual) precioActual.textContent = newPrice + " soles";
+          if (pizarraDimensions) pizarraDimensions.textContent = newDimensions;
+          if (pizarraImage) pizarraImage.src = newImage;
+        });
+      });
+
+      // Interactividad de las tabs
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabPanels = document.querySelectorAll('.tab-panel');
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          tabPanels.forEach(panel => panel.classList.remove('active'));
+          
+          btn.classList.add('active');
+          const tab = btn.getAttribute('data-tab');
+          document.getElementById('tab-' + tab)?.classList.add('active');
+        });
+      });
+    });
+  </script>
+</Layout>

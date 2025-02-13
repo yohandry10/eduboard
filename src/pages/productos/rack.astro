@@ -1,0 +1,214 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Rack Empotrado">
+
+  <!-- Contenedor con fondo degradado a los lados -->
+  <div class="page-gradient">
+
+    <!-- Contenido centrado con fondo blanco -->
+    <div class="main-content">
+
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <h1 class="hero-title">Rack Eléctrico para Proyector</h1>
+        <p class="hero-subtitle">Solución profesional que se oculta en el cielo raso</p>
+      </div>
+
+      <!-- Imágenes SIN bordes o "cart" -->
+      <div class="image-row">
+        <img 
+          src="https://montech.pe/cdn/shop/files/PRELEC_600x.png?v=1735786598" 
+          alt="Rack Eléctrico 1"
+          class="raw-image"
+        />
+        <img 
+          src="https://montech.pe/cdn/shop/products/Racksoporteparaproyectordeparedytecho-RackMontechsurcolimaperu_6.jpg?v=1601781339" 
+          alt="Rack Eléctrico 2"
+          class="raw-image"
+        />
+      </div>
+
+      <!-- Características -->
+      <div class="features-section">
+        <h2 class="section-title">Características</h2>
+        <div class="features-grid">
+          {[
+            'Fabricado en aluminio',
+            'Control remoto y pulsador incluido',
+            'Marca EDUBOARD',
+            'Funcionamiento silencioso',
+            'Presentación profesional',
+            'Fabricación a medida',
+            'Motor tubular de 10NT',
+            'Capacidad de carga 20 kg',
+            'Garantía de 1 año',
+          ].map((feature) => (
+            <div class="feature-item">
+              <span class="checkmark">✓</span>
+              <span class="feature-text">{feature}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Beneficios -->
+      <div class="benefits-section">
+        <h2 class="section-title">Ventajas del Rack Empotrado</h2>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <h3 class="benefit-title">Estética Profesional</h3>
+            <p class="benefit-text">Se integra perfectamente con el diseño del ambiente</p>
+          </div>
+          <div class="benefit-card">
+            <h3 class="benefit-title">Seguridad</h3>
+            <p class="benefit-text">Protege su equipo de proyección</p>
+          </div>
+          <div class="benefit-card">
+            <h3 class="benefit-title">Facilidad de Uso</h3>
+            <p class="benefit-text">Control remoto para operación sencilla</p>
+          </div>
+        </div>
+      </div>
+
+    </div> 
+    <!-- Fin .main-content -->
+
+  </div>
+  <!-- Fin .page-gradient -->
+
+
+  <!-- Estilos en CSS puro -->
+  <style>
+    /* 1) Ajustes base */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      color: #333;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    /* 2) Contenedor con degradado en los bordes */
+    .page-gradient {
+      width: 100%;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #C02425, #F0CB35);
+      padding: 2rem 0; /* Espacio arriba/abajo */
+    }
+
+    /* 3) Contenedor central con fondo blanco */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra sutil */
+    }
+
+    /* Hero Section */
+    .hero-section {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .hero-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: #666;
+    }
+
+    /* Nueva fila de imágenes SIN bordes/carts */
+    .image-row {
+      display: flex;
+      flex-direction: column; /* Por defecto una debajo de la otra en pantallas pequeñas */
+      gap: 2rem; 
+      align-items: center; /* Centra las imágenes de forma horizontal */
+      margin-bottom: 4rem;
+    }
+    @media (min-width: 768px) {
+      .image-row {
+        flex-direction: row; /* En pantallas medianas y +, lado a lado */
+        justify-content: center;
+      }
+    }
+    .raw-image {
+      width: auto; 
+      max-width: 100%; 
+      height: auto;
+      /* Sin bordes ni sombras */
+    }
+
+    /* Sección de Características */
+    .features-section {
+      background: #fff;
+      border-radius: 8px;
+      margin-bottom: 4rem;
+    }
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr; /* 1 columna en mobile */
+      gap: 1rem;
+    }
+    @media (min-width: 768px) {
+      .features-grid {
+        grid-template-columns: 1fr 1fr; /* 2 columnas en pantallas medianas+ */
+      }
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .checkmark {
+      color: #fc5e65; /* Color primario */
+      font-weight: bold;
+    }
+    .feature-text {
+      color: #555;
+    }
+
+    /* Sección de Beneficios */
+    .benefits-section {
+      background: #f9f9f9;   /* Equivalente a .bg-gray-50 */
+      border-radius: 8px;
+      padding: 2rem;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr; /* 1 columna en mobile */
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (min-width: 768px) {
+      .benefits-grid {
+        grid-template-columns: 1fr 1fr 1fr; /* 3 columnas en pantallas md+ */
+      }
+    }
+    .benefit-card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      padding: 1rem;
+    }
+    .benefit-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .benefit-text {
+      color: #666;
+    }
+  </style>
+
+</Layout>

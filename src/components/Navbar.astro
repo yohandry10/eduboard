@@ -1,0 +1,98 @@
+---
+const productos = [
+  { 
+    name: 'Pizarras Interactivas', 
+    href: '/productos/pizarras',
+    icon: '🖥️'
+  },
+  { 
+    name: 'Pantallas Interactivas', 
+    href: '/productos/pantallas',
+    icon: '📺'
+  },
+  { 
+    name: 'Proyector Interactivo', 
+    href: '/productos/proyector', // Ruta corregida
+    icon: '📽️'
+  },
+  { 
+    name: 'Pantalla de Proyeccion', 
+    href: '/productos/ecran',
+    icon: '🎬'
+  },
+  { 
+    name: 'Pedestales', 
+    href: '/productos/pedestales',
+    icon: '🏗️'
+  },
+  { 
+    name: 'Rack Empotrado', 
+    href: '/productos/rack',
+    icon: '📦'
+  },
+];
+---
+
+<nav class="bg-white border-t shadow-sm">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo con imagen -->
+      <a href="/" class="flex items-center">
+        <img src="/logo.webp" alt="Logo EDUBOARD" class="h-10 w-auto" /> 
+      </a>
+
+      <!-- Enlaces centrados -->
+      <div class="hidden md:flex items-center space-x-8 mx-auto">
+        <a href="/" class="text-gray-700 hover:text-primary transition-colors">Inicio</a>
+        
+        <!-- Menú desplegable de Productos -->
+        <div class="relative group inline-flex items-center">
+          <button class="text-gray-700 hover:text-primary py-2 inline-flex items-center transition-colors">
+            Productos
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="absolute left-0 top-full mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div class="py-1">
+              {productos.map((producto) => (
+                <a
+                  href={producto.href}
+                  class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 gap-3 transition-colors"
+                >
+                  <span class="text-2xl">{producto.icon}</span>
+                  <span>{producto.name}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        <a href="/nosotros" class="text-gray-700 hover:text-primary transition-colors">Nosotros</a>
+        
+      </div>
+
+      <!-- Botón para menú móvil -->
+      <button class="md:hidden">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Estilos adicionales para mejorar la apariencia -->
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .group:hover .group-hover\:visible {
+    visibility: visible;
+  }
+  .group:hover .group-hover\:opacity-100 {
+    opacity: 1;
+  }
+</style>

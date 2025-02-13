@@ -1,0 +1,987 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<style>
+  /* Reset básico */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  /* Secciones generales */
+  .section {
+    padding: 60px 0;
+    position: relative;
+  }
+  /* Fondo degradado lateral (para secciones que lo requieran) */
+  .section.gradient {
+    background: linear-gradient(to right, #C02425, #F0CB35);
+  }
+  /* Contenido central en fondo blanco */
+  .content {
+    background: white;
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 1000px;
+  }
+
+  /* --- Botón para enlazar a productos en la sección de diferencias --- */
+  .diff-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #000; /* Negro */
+    color: #fff;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  .diff-button:hover {
+    background-color: #333; /* Gris oscuro */
+  }
+
+  /* --- TÍTULOS DE SECCIÓN --- */
+  .section-title {
+    font-size: 3em;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+  /* Para secciones degradadas forzamos el título en blanco */
+  .gradient .section-title {
+    color: white;
+  }
+  /* Título más pequeño para la sección de diferencias */
+  .diff-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .diff-subtitle {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1em;
+    color: #666;
+  }
+
+  /* --- HERO --- */
+  .hero {
+    background: linear-gradient(to right, #C02425, #F0CB35);
+    color: white;
+    text-align: center;
+    padding: 80px 0;
+  }
+  .hero h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+  .hero p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+  /* Botón del hero en negro */
+  .hero a {
+    background: #000; /* Negro */
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  .hero a:hover {
+    background: #333; /* Gris oscuro */
+  }
+
+  /* --- NUESTROS BENEFICIOS --- */
+  .benefits {
+    text-align: center;
+  }
+  .benefits .item {
+    display: inline-block;
+    width: 22%;
+    margin: 1%;
+    vertical-align: top;
+  }
+  .benefits .item .icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+  }
+  .benefits .item h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  .benefits .item p {
+    font-size: 0.95em;
+    color: #666;
+  }
+  @media (max-width:768px) {
+    .benefits .item {
+      display: block;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+
+  /* --- CARACTERÍSTICAS (50% texto – 50% imagen) --- */
+  .caracteristicas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  .caracteristicas .text,
+  .caracteristicas .image {
+    flex: 1 1 300px;
+    padding: 20px;
+  }
+  .caracteristicas ul {
+    list-style: disc inside;
+    margin-left: 20px;
+    font-size: 1.1em;
+  }
+  .caracteristicas .image img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* --- ¿CÓMO FUNCIONA UNA PDI? --- */
+  .how-it-works {
+    text-align: center;
+  }
+  .how-it-works .items {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .how-it-works .item {
+    width: 28%;
+    text-align: center;
+  }
+  .how-it-works .item span {
+    font-size: 3em;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .how-it-works .item h4 {
+    font-size: 1.2em;
+    margin-top: 10px;
+  }
+  @media (max-width:768px) {
+    .how-it-works .item {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+
+  /* --- DIFERENCIAS ENTRE PRODUCTOS (ICONOS alineados horizontalmente, con botones) --- */
+  .differences {
+    text-align: center;
+  }
+  .differences .items {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .differences .item {
+    width: 15%;
+    text-align: center;
+  }
+  .differences .item span {
+    font-size: 3em;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .differences .item h4 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+  .differences .item p {
+    font-size: 0.95em;
+    color: #666;
+  }
+  @media (max-width:1024px) {
+    .differences .item {
+      width: 25%;
+    }
+  }
+  @media (max-width:768px) {
+    .differences .item {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+
+  /* --- DIMENSIONES, FORMATOS, TAMAÑOS (50% texto – 50% imagen) --- */
+  .dimensiones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  .dimensiones .text,
+  .dimensiones .image {
+    flex: 1 1 300px;
+    padding: 20px;
+  }
+  .dimensiones .image img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* --- PRECIO PIZARRA INTERACTIVA (50% imagen – 50% texto) --- */
+  .precio {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  .precio .text,
+  .precio .image {
+    flex: 1 1 300px;
+    padding: 20px;
+  }
+  .precio .image img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* --- GALERÍA --- */
+  .gallery {
+    text-align: center;
+  }
+  .gallery .images {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 20px 0;
+  }
+  .gallery .images img {
+    max-width: 300px;
+    border-radius: 8px;
+  }
+
+  /* --- TABS: DOCENTES / ALUMNOS --- */
+  .tabs {
+    text-align: center;
+  }
+  .tab-buttons {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  /* Botones de pestañas en negro */
+  .tab-buttons button {
+    padding: 10px 20px;
+    border: 1px solid #000;
+    background: #000; /* Negro */
+    color: #fff;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+  }
+  .tab-buttons button:hover {
+    background: #333; /* Gris oscuro */
+  }
+  .tab-buttons button.active {
+    background: #333; /* Gris oscuro */
+    color: #fff;
+  }
+  .tab-content {
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1em;
+  }
+  .tab-content ul {
+    list-style: disc inside;
+    margin-left: 20px;
+  }
+</style>
+
+<Layout title="Inicio">
+  <!-- HERO SECTION -->
+<section class="hero section">
+  <!-- Slider de imágenes de fondo -->
+  <div class="hero__image-slider">
+    <img src="/public/PANTALLA1.webp" alt="Fondo 1" class="hero__image active">
+    <img src="/public/PANTALLA2.webp" alt="Fondo 2" class="hero__image">
+    <img src="/public/PANTALLA3.webp" alt="Fondo 3" class="hero__image">
+    
+    <!-- Flechas de navegación -->
+    <button class="hero__nav-button hero__nav-button--prev">‹</button>
+    <button class="hero__nav-button hero__nav-button--next">›</button>
+    
+    <!-- Contenedor de puntos -->
+    <div class="hero__dots-container">
+      <span class="hero__dot active"></span>
+      <span class="hero__dot"></span>
+      <span class="hero__dot"></span>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1 class="section-title">Transformando la Educación con Tecnología Interactiva</h1>
+    <p>Especialistas en Pizarras Interactivas y soluciones multimedia para una educación moderna y efectiva.</p>
+    <!-- Botón del hero en negro -->
+  </div>
+
+  <div class="hero__content">
+    <!-- Contenedor que simula un botón para reproducir el video -->
+    <div class="video-button" id="open-video" role="button" tabindex="0">
+      <video autoplay loop muted playsinline class="video-button__video">
+        <source src="/12345.mp4" type="video/mp4" />
+        Tu navegador no soporta el elemento de video.
+      </video>
+      <img src="/svg2.svg" alt="Ícono de video" class="video-button__icon" />
+    </div>
+  </div>
+
+  <!-- Lightbox para el video -->
+  <div id="video-lightbox" class="video-lightbox">
+    <div class="video-container">
+      <button class="close-button" id="close-video">×</button>
+      <video id="lightbox-video" width="100%" height="auto" controls>
+        <source src="/12345.mp4" type="video/mp4" />
+        Tu navegador no soporta el elemento de video.
+      </video>
+    </div>
+  </div>
+
+  <style>
+    /* Estilos del hero */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    /* Slider de imágenes de fondo */
+    .hero__image-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+    }
+    .hero__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    .hero__image.active {
+      opacity: 1;
+    }
+    .hero__nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      font-size: 2rem;
+      padding: 1rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .hero__nav-button--prev {
+      left: 1rem;
+    }
+    .hero__nav-button--next {
+      right: 1rem;
+    }
+    .hero__dots-container {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 10;
+    }
+    .hero__dot {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+    }
+    .hero__dot.active {
+      background: white;
+    }
+    .hero__content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+    }
+    /* Estilos del contenedor que simula el botón de video */
+    .video-button {
+      position: relative;
+      width: 160px;
+      height: 50px;
+      overflow: hidden;
+      border-radius: 25px;
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .video-button:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+      transform: scale(1.05);
+    }
+    .video-button__video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .video-button__icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1.5rem;
+      height: 1.5rem;
+      filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.7));
+      pointer-events: none;
+    }
+    /* Estilos del lightbox */
+    .video-lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1001;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-lightbox.show {
+      display: flex;
+    }
+    .video-container {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+    }
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 1002;
+    }
+  </style>
+
+  <script client:load>
+    // Se utiliza client:load para ejecutar el script en el cliente
+    function initHero() {
+      console.log("initHero se ha inicializado");
+      
+      /* ==============================
+         Funcionalidad del Video & Lightbox
+         ============================== */
+      const videoButton = document.getElementById('open-video');
+      const videoLightbox = document.getElementById('video-lightbox');
+      const closeButton = document.getElementById('close-video');
+      const lightboxVideo = document.getElementById('lightbox-video');
+
+      if (videoButton && videoLightbox && closeButton && lightboxVideo) {
+        videoButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          console.log("Se hizo clic en el contenedor del video");
+          videoLightbox.classList.add('show');
+          lightboxVideo.currentTime = 0; // Reinicia el video
+          lightboxVideo.play();
+          // Solicitar pantalla completa en el contenedor del lightbox
+          if (videoLightbox.requestFullscreen) {
+            videoLightbox.requestFullscreen();
+          } else if (videoLightbox.webkitRequestFullscreen) {
+            videoLightbox.webkitRequestFullscreen();
+          } else if (videoLightbox.msRequestFullscreen) {
+            videoLightbox.msRequestFullscreen();
+          }
+        });
+      
+        closeButton.addEventListener('click', () => {
+          console.log("Se hizo clic en el botón de cerrar");
+          videoLightbox.classList.remove('show');
+          lightboxVideo.pause();
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          } else if (document.webkitFullscreenElement) {
+            document.webkitExitFullscreen();
+          } else if (document.msFullscreenElement) {
+            document.msExitFullscreen();
+          }
+        });
+      
+        videoLightbox.addEventListener('click', (event) => {
+          if (event.target === videoLightbox) {
+            console.log("Se hizo clic fuera del contenedor de video");
+            videoLightbox.classList.remove('show');
+            lightboxVideo.pause();
+            if (document.fullscreenElement) {
+              document.exitFullscreen();
+            } else if (document.webkitFullscreenElement) {
+              document.webkitExitFullscreen();
+            } else if (document.msFullscreenElement) {
+              document.msExitFullscreen();
+            }
+          }
+        });
+      } else {
+        console.error("No se encontraron uno o más elementos necesarios para el video.");
+      }
+      
+      /* ==============================
+         Funcionalidad del Slider de Imágenes
+         ============================== */
+      const sliderImages = document.querySelectorAll('.hero__image');
+      const nextButton = document.querySelector('.hero__nav-button--next');
+      const prevButton = document.querySelector('.hero__nav-button--prev');
+      const dots = document.querySelectorAll('.hero__dot');
+      let currentSlide = 0;
+      
+      function showSlide(index) {
+        sliderImages.forEach((img, i) => {
+          img.classList.toggle('active', i === index);
+        });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+      }
+      
+      function nextSlide() {
+        let next = currentSlide + 1;
+        if (next >= sliderImages.length) {
+          next = 0;
+        }
+        showSlide(next);
+      }
+      
+      function prevSlide() {
+        let prev = currentSlide - 1;
+        if (prev < 0) {
+          prev = sliderImages.length - 1;
+        }
+        showSlide(prev);
+      }
+      
+      if (nextButton) {
+        nextButton.addEventListener('click', nextSlide);
+      }
+      if (prevButton) {
+        prevButton.addEventListener('click', prevSlide);
+      }
+      
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          showSlide(index);
+        });
+      });
+      
+      // Cambio automático de slide cada 5 segundos
+      setInterval(nextSlide, 5000);
+    }
+
+    // Inicializar el hero cuando el DOM esté completamente cargado
+    document.addEventListener('DOMContentLoaded', initHero);
+  </script>
+</section>
+
+  <!-- CARACTERÍSTICAS (50% texto – 50% imagen) -->
+  <section class="section gradient">
+    <div class="container">
+      <div class="caracteristicas">
+        <div class="text">
+          <h1 class="section-title">Características</h1>
+          <ul>
+            <li>10 puntos táctiles (10 alumnos escriben a la vez).</li>
+            <li>Superficie super resistente.</li>
+            <li>Calibración de alta precisión.</li>
+            <li>Control multitáctil nativo en Windows 7, 8, 10...</li>
+            <li>Tecnología PnP: Enchufar USB y usar.</li>
+            <li>Intuitiva, enfocada a la facilidad de uso.</li>
+            <li>Software de creación de clase potente e interactivo.</li>
+            <li>20 botones de accesos directos, ¡Y mucho más!...</li>
+          </ul>
+        </div>
+        <div class="image">
+          <img src="/public/proyector.jpeg" alt="Características de la PDI">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ¿CÓMO FUNCIONA UNA PDI? -->
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">¿Cómo funciona una PDI?</h1>
+      <p style="text-align:center; margin-bottom:40px;">Elementos necesarios para operar:</p>
+      <div class="how-it-works">
+        <div class="items">
+          <div class="item">
+            <span>🖥️</span>
+            <h4>Pizarra interactiva</h4>
+          </div>
+          <div class="item">
+            <span>📽️</span>
+            <h4>Proyector</h4>
+          </div>
+          <div class="item">
+            <span>💻</span>
+            <h4>Computador o laptop</h4>
+          </div>
+        </div>
+      </div>
+      <!-- Botón para ver detalles de funcionamiento, que dirige a la página pdiPizarra.astro -->
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="/productos/pdiPizarra" class="diff-button">Ver detalles</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIMENSIONES, FORMATOS, TAMAÑOS (50% texto – 50% imagen) -->
+  <section class="section gradient">
+    <div class="container">
+      <div class="dimensiones">
+        <div class="text">
+          <h1 class="section-title">Dimensiones, formatos, tamaños</h1>
+          <p>
+            Tenemos en relación de aspecto 16:10, 16:9, 4:3 (esta última no recomendable para tamaños mayores a 90 pulgadas).<br>
+            Tamaños de 70", 82", 96", 108" pulgadas, ¡muy pronto tamaños aún más grandes!
+          </p>
+        </div>
+        <div class="image">
+          <img src="/public/pizarra-pexels.webp" alt="Dimensiones y tamaños">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAS ENTRE PRODUCTOS (ICONOS alineados horizontalmente, con botones) -->
+  <section class="section">
+    <div class="container">
+      <!-- Título más pequeño -->
+      <h2 class="diff-title">Diferencia entre una Pizarra interactiva, monitor interactivo, proyector interactivo, módulo interactivo y accesorio interactivo</h2>
+      <p class="diff-subtitle">Tenemos diferencias sustanciales entre estos productos:</p>
+      <div class="differences">
+        <div class="items">
+          <!-- Pizarras Interactivas -->
+          <div class="item">
+            <span>🖥️</span>
+            <h4>Pizarras Interactivas</h4>
+            <p>Necesita Proyector<br>Necesita CPU<br>...</p>
+            <a href="/productos/pizarras" class="diff-button">Ver Producto</a>
+          </div>
+          <!-- Pantallas Interactivas -->
+          <div class="item">
+            <span>📺</span>
+            <h4>Pantallas Interactivas</h4>
+            <p>Necesita Proyector<br>Necesita CPU<br>...</p>
+            <a href="/productos/pantallas" class="diff-button">Ver Producto</a>
+          </div>
+          <!-- Proyector Interactivo -->
+          <div class="item">
+            <span>📽️</span>
+            <h4>Proyector Interactivo</h4>
+            <p>Fuente el mismo Proyector<br>Necesita CPU<br>...</p>
+            <a href="/productos/proyector" class="diff-button">Ver Producto</a>
+          </div>
+          <!-- Pantalla de Proyección -->
+          <div class="item">
+            <span>🎬</span>
+            <h4>Pantalla de Proyección</h4>
+            <p>Detalles breves...<br>Detalles breves...<br>...</p>
+            <a href="/productos/ecran" class="diff-button">Ver Producto</a>
+          </div>
+          <!-- Pedestales -->
+          <div class="item">
+            <span>🏗️</span>
+            <h4>Pedestales</h4>
+            <p>Detalles breves...<br>Detalles breves...<br>...</p>
+            <a href="/productos/pedestales" class="diff-button">Ver Producto</a>
+          </div>
+          <!-- Rack Empotrado -->
+          <div class="item">
+            <span>📦</span>
+            <h4>Rack Empotrado</h4>
+            <p>No necesita Proyector<br>CPU Incorporado<br>...</p>
+            <a href="/productos/rack" class="diff-button">Ver Producto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRECIO PIZARRA INTERACTIVA (50% imagen – 50% texto) -->
+  <section class="section gradient">
+    <div class="container">
+      <div class="precio">
+        <div class="image">
+          <img src="/public/pizarra.jpeg" alt="Precio Pizarra">
+        </div>
+        <div class="text">
+          <h1 class="section-title">Precio Pizarra Interactiva</h1>
+          <p>
+            Tenemos pizarras electrónicas, pizarras táctiles portátiles y monitores touch desde: 
+            <strong>900 soles</strong> (incluido IGV, entrega, capacitación e instalación!!!)
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- GALERÍA -->
+<section class="section gallery-section">
+  <div class="container">
+    <h1 class="section-title">Galería</h1>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="/public/galeria.webp" alt="Imagen 1">
+        <div class="overlay"><span>Ver Imagen</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="/public/galeria2.webp" alt="Imagen 2">
+        <div class="overlay"><span>Ver Imagen</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="/public/galeria3.webp" alt="Imagen 3">
+        <div class="overlay"><span>Ver Imagen</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="/public/galeria4.jpeg" alt="Imagen 4">
+        <div class="overlay"><span>Ver Imagen</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="/public/galeria4.jpeg" alt="Imagen 4">
+        <div class="overlay"><span>Ver Imagen</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="/public/galeria4.jpeg" alt="Imagen 4">
+        <div class="overlay"><span>Ver Imagen</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox para ampliar imágenes -->
+  <div class="lightbox" id="lightbox">
+    <span class="close" id="lightbox-close">&times;</span>
+    <img class="lightbox-content" id="lightbox-content">
+  </div>
+
+  <style>
+    /* Sección de Galería */
+    .gallery-section {
+      padding: 2rem 0;
+      background: #f9f9f9;
+    }
+    .gallery-section .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
+      margin-top: 2rem;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.4s ease;
+    }
+    .gallery-item:hover .overlay {
+      opacity: 1;
+    }
+    .overlay span {
+      color: #fff;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Estilos del Lightbox */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2.5rem;
+      color: #fff;
+      cursor: pointer;
+      z-index: 1001;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxContent = document.getElementById('lightbox-content');
+      const lightboxClose = document.getElementById('lightbox-close');
+
+      galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const imgSrc = item.querySelector('img').src;
+          lightboxContent.src = imgSrc;
+          lightbox.style.display = 'flex';
+        });
+      });
+
+      lightboxClose.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+      });
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</section>
+
+
+  <!-- TABS: DOCENTES / ALUMNOS -->
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">Docentes / Alumnos</h1>
+      <div class="tabs">
+        <div class="tab-buttons">
+          <button id="btn-docentes" onclick="toggleTab('docentes')" class="active">Docentes</button>
+          <button id="btn-alumnos" onclick="toggleTab('alumnos')">Alumnos</button>
+        </div>
+        <div id="beneficios-docentes" class="tab-content">
+          <h3>Beneficios de la pizarra interactiva para docentes</h3>
+          <ul>
+            <li>Favorece el aprendizaje colaborativo y posibilita el uso colectivo en clase de los canales telemáticos de comunicación (e-mail, chat, videoconferencia…).</li>
+            <li>Supone una fuente inagotable de información multimedia e interactiva disponible de manera inmediata en el aula.</li>
+            <li>Aumenta la motivación del profesor al disponer de más recursos y obtener una respuesta positiva de los estudiantes.</li>
+            <li>Permite clases más dinámicas, vistosas y audiovisuales, facilitando el seguimiento de las explicaciones.</li>
+            <li>Optimiza el tiempo al acceder a la información de manera inmediata sin dedicar demasiado tiempo a preparar materiales.</li>
+            <li>Los materiales preparados se pueden adaptar y reutilizar cada año.</li>
+            <li>Incrementa la motivación y la autoestima del profesor al descubrir nuevas posibilidades metodológicas.</li>
+          </ul>
+        </div>
+        <div id="beneficios-alumnos" class="tab-content" style="display:none;">
+          <h3>Beneficios de la pizarra interactiva para alumnos</h3>
+          <ul>
+            <li>Aumento de la motivación y del aprendizaje.</li>
+            <li>Mayor papel en clase, pasando a ser participantes activos.</li>
+            <li>Clases más dinámicas y vistosas que facilitan el seguimiento.</li>
+            <li>Acercamiento de las TIC a alumnos con discapacidad.</li>
+            <li>Mejor explicación de tradiciones y patrimonio cultural para alumnos de países lejanos.</li>
+            <li>Posibilidad de aumentar el tamaño de textos e imágenes para alumnos con dificultades visuales.</li>
+            <li>Uso de presentaciones visuales y lenguaje de signos para alumnos con dificultades auditivas.</li>
+            <li>Soporte para alumnos con necesidades específicas de apoyo educativo, permitiendo el uso de una gran superficie sensible a lápiz o dedo.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  function toggleTab(tab) {
+    const docentes = document.getElementById('beneficios-docentes');
+    const alumnos = document.getElementById('beneficios-alumnos');
+    const btnDocentes = document.getElementById('btn-docentes');
+    const btnAlumnos = document.getElementById('btn-alumnos');
+    if (tab === 'docentes') {
+      docentes.style.display = 'block';
+      alumnos.style.display = 'none';
+      btnDocentes.classList.add('active');
+      btnAlumnos.classList.remove('active');
+    } else {
+      docentes.style.display = 'none';
+      alumnos.style.display = 'block';
+      btnDocentes.classList.remove('active');
+      btnAlumnos.classList.add('active');
+    }
+  }
+</script>

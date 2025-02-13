@@ -1,0 +1,240 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Pantallas Digitales Interactivas">
+  <!-- Fondo degradado en los bordes -->
+  <div class="page-gradient">
+
+    <!-- Contenedor central con fondo blanco -->
+    <div class="main-content">
+
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <h1 class="hero-title">Pantallas Digitales Interactivas</h1>
+        <p class="hero-subtitle">
+          Tecnología de última generación para una experiencia educativa inmersiva
+        </p>
+      </div>
+
+      <!-- Modelo Básico -->
+      <div class="product-section">
+        <h2 class="product-title">Pantalla Digital Interactiva</h2>
+
+        <div class="product-grid">
+          <!-- Columna Izquierda -->
+          <div class="product-info-left">
+            <div class="image-container">
+              <img 
+                src="/pantalla-interactiva.webp" 
+                alt="Pantalla Digital Interactiva" 
+                class="product-image"
+              />
+            </div>
+            <p class="product-description">
+              La pantalla digital interactiva permite la interacción directa y dinámica con el contenido 
+              mediante gestos, es una máquina todo-en-uno con pantalla táctil y sistema operativo Android, 
+              como una gran tablet. Puede integrar Windows 11, cámara 4K ePTZ, micrófonos, entre otros.
+            </p>
+            <div class="price-box">
+              <p class="price-value">S./7,000</p>
+              <p class="price-note">Incluido IGV</p>
+            </div>
+          </div>
+
+          <!-- Columna Derecha -->
+          <div class="product-info-right">
+            <h3 class="subtitle">Seleccione el Tamaño</h3>
+            <div class="size-buttons">
+              <button class="size-button" data-price="7000">55"</button>
+              <button class="size-button" data-price="8500">65"</button>
+              <button class="size-button" data-price="10000">75"</button>
+              <button class="size-button" data-price="11500">86"</button>
+            </div>
+
+            <div class="specifications">
+              <h3 class="subtitle">Especificaciones</h3>
+              <ul class="spec-list">
+                <li>Pantalla táctil de alta precisión</li>
+                <li>Sistema operativo Android integrado</li>
+                <li>Compatible con Windows 11</li>
+                <li>Cámara 4K ePTZ opcional</li>
+                <li>Múltiples puertos de conexión</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <!-- Fin Modelo Básico -->
+
+    </div>
+    <!-- Fin main-content -->
+
+  </div>
+  <!-- Fin page-gradient -->
+
+  <!-- Script para actualizar el precio según tamaño -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sizeButtons = document.querySelectorAll('.size-button');
+      const priceValue = document.querySelector('.price-value');
+
+      sizeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Actualiza el precio
+          const newPrice = button.getAttribute('data-price');
+          priceValue.textContent = 'S./' + newPrice;
+
+          // Actualiza estado visual (botón seleccionado)
+          sizeButtons.forEach(btn => btn.classList.remove('active-size'));
+          button.classList.add('active-size');
+        });
+      });
+    });
+  </script>
+
+  <!-- Estilos en CSS puro -->
+  <style>
+    /* Reset / base */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      color: #333;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    /* 1) Fondo degradado en los bordes (consistente con el otro sitio) */
+    .page-gradient {
+      width: 100%;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #C02425, #F0CB35);
+      padding: 2rem 0; /* Espacio arriba/abajo */
+    }
+
+    /* 2) Contenedor central con fondo blanco */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); /* sombra sutil */
+    }
+
+    /* Hero Section */
+    .hero-section {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .hero-title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    /* Sección de producto */
+    .product-section {
+      margin-bottom: 4rem;
+    }
+    .product-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* dos columnas */
+      gap: 2rem;
+    }
+    .image-container {
+      margin-bottom: 1rem;
+    }
+    .product-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .product-description {
+      color: #555;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    /* Caja de precio: ahora con fondo negro y texto blanco para consistencia */
+    .price-box {
+      background: #000;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+    .price-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 0 0 0.5rem;
+    }
+    .price-note {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+
+    /* Selección de tamaño */
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .size-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .size-button {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      text-align: center;
+    }
+    .size-button:hover {
+      background: #eee;
+    }
+    .active-size {
+      background: #C02425;
+      color: #fff;
+      border-color: #C02425;
+    }
+
+    /* Sección de especificaciones */
+    .specifications {
+      margin-top: 1rem;
+    }
+    .spec-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .spec-list li {
+      margin-bottom: 0.5rem;
+      position: relative;
+      padding-left: 1rem;
+    }
+    .spec-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #C02425;
+      font-weight: bold;
+    }
+  </style>
+
+</Layout>
