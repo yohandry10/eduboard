@@ -122,7 +122,6 @@ const productos = [
     align-items: center;
     justify-content: flex-start; /* Alineado a la izquierda */
     gap: 16px;
-    margin-left: 170px; /* Añade un margen izquierdo si es necesario */
   }
   .nav-link {
     color: #4a5568;
@@ -253,6 +252,13 @@ const productos = [
   }
 
   /* Responsive */
+  @media (min-width: 769px) {
+    /* Aplica el margen izquierdo solo en desktop */
+    .nav-links {
+      margin-left: 170px; /* Margen izquierdo para desktop */
+    }
+  }
+
   @media (max-width: 768px) {
     .nav-links {
       display: none; /* Oculta los enlaces en móvil */
@@ -266,6 +272,7 @@ const productos = [
       padding: 16px 0;
       transform: translateY(-100%);
       transition: transform 0.3s;
+      margin-left: 0; /* Sin margen izquierdo en móvil */
     }
     .nav-links.active {
       display: flex; /* Muestra los enlaces cuando el menú está activo */
