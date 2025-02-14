@@ -27,6 +27,8 @@ import Layout from '../layouts/Layout.astro';
   /* Fondo degradado lateral (para secciones que lo requieran) */
   .section.gradient {
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    /* Todo el contenido de estas secciones se mostrará en blanco */
+    color: white;
   }
   /* Contenido central en fondo blanco */
   .content {
@@ -60,9 +62,10 @@ import Layout from '../layouts/Layout.astro';
     letter-spacing: 2px;
     text-align: center;
   }
-  /* Para secciones degradadas forzamos el título en blanco */
+  /* Para secciones degradadas forzamos el título en blanco con sombra para mejorar la legibilidad */
   .gradient .section-title {
     color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   }
   /* Título más pequeño para la sección de diferencias */
   .diff-title {
@@ -91,31 +94,173 @@ import Layout from '../layouts/Layout.astro';
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
     color: white;
     text-align: center;
-    padding: 80px 0;
+    padding: 40px 0; /* Reducido */
+    position: relative;
+    width: 100%;
+    height: 70vh; /* Reducido de 100vh */
+    overflow: hidden;
   }
   .hero h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
+    font-size: 2.5em;
+    margin-bottom: 15px;
   }
   .hero p {
-    font-size: 1.2em;
-    margin-bottom: 30px;
+    font-size: 1em;
+    margin-bottom: 20px;
   }
   /* Botón del hero en negro */
   .hero a {
-    background: #000; /* Negro */
+    background: #000;
     color: #fff;
     text-decoration: none;
-    padding: 12px 30px;
+    padding: 10px 25px;
     border-radius: 50px;
     font-weight: bold;
     transition: background 0.3s;
   }
   .hero a:hover {
-    background: #333; /* Gris oscuro */
+    background: #333;
+  }
+  /* Slider de imágenes de fondo en el hero */
+  .hero__image-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+  }
+  .hero__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+  }
+  .hero__image.active {
+    opacity: 1;
+  }
+  .hero__nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    font-size: 2rem;
+    padding: 1rem;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .hero__nav-button--prev {
+    left: 1rem;
+  }
+  .hero__nav-button--next {
+    right: 1rem;
+  }
+  .hero__dots-container {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 10;
+  }
+  .hero__dot {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+  .hero__dot.active {
+    background: white;
+  }
+  .hero__content {
+    position: relative;
+    z-index: 20;
+  }
+  /* Botón para reproducir video en el hero */
+  .video-button {
+    position: relative;
+    width: 160px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  .video-button:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+  }
+  .video-button__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .video-button__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1.5rem;
+    height: 1.5rem;
+    filter: drop-shadow(0px 0px 3px rgba(0,0,0,0.7));
+    pointer-events: none;
+  }
+  /* Lightbox para el video */
+  .video-lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1001;
+    align-items: center;
+    justify-content: center;
+  }
+  .video-lightbox.show {
+    display: flex;
+  }
+  .video-container {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+  }
+  .video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 1002;
   }
 
-  /* --- NUESTROS BENEFICIOS --- */
+  /* --- BENEFICIOS, CARACTERÍSTICAS, ETC. --- */
   .benefits {
     text-align: center;
   }
@@ -144,8 +289,6 @@ import Layout from '../layouts/Layout.astro';
       margin-bottom: 20px;
     }
   }
-
-  /* --- CARACTERÍSTICAS (50% texto – 50% imagen) --- */
   .caracteristicas {
     display: flex;
     flex-wrap: wrap;
@@ -167,7 +310,6 @@ import Layout from '../layouts/Layout.astro';
     border-radius: 8px;
   }
 
-  /* --- ¿CÓMO FUNCIONA UNA PDI? --- */
   .how-it-works {
     text-align: center;
   }
@@ -197,7 +339,6 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  /* --- DIFERENCIAS ENTRE PRODUCTOS (ICONOS alineados horizontalmente, con botones) --- */
   .differences {
     text-align: center;
   }
@@ -236,7 +377,6 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  /* --- DIMENSIONES, FORMATOS, TAMAÑOS (50% texto – 50% imagen) --- */
   .dimensiones {
     display: flex;
     flex-wrap: wrap;
@@ -253,7 +393,6 @@ import Layout from '../layouts/Layout.astro';
     border-radius: 8px;
   }
 
-  /* --- PRECIO PIZARRA INTERACTIVA (50% imagen – 50% texto) --- */
   .precio {
     display: flex;
     flex-wrap: wrap;
@@ -270,7 +409,6 @@ import Layout from '../layouts/Layout.astro';
     border-radius: 8px;
   }
 
-  /* --- GALERÍA --- */
   .gallery {
     text-align: center;
   }
@@ -286,29 +424,149 @@ import Layout from '../layouts/Layout.astro';
     border-radius: 8px;
   }
 
-  /* --- TABS: DOCENTES / ALUMNOS --- */
-  .tabs {
-    text-align: center;
+  /* --- GALERÍA: sección de grid y lightbox --- */
+  .gallery-section {
+    padding: 2rem 0;
+    background: #f9f9f9;
   }
+  .gallery-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+    margin-top: 2rem;
+  }
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+  }
+  .gallery-item:hover .overlay {
+    opacity: 1;
+  }
+  .overlay span {
+    color: #fff;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+    object-fit: contain;
+  }
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2.5rem;
+    color: #fff;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  /* --- TABS: DOCENTES / ALUMNOS con fondo degradado personalizado --- */
+  .tabs-section {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 60px 0;
+  }
+  .tabs-section .section-title,
+  .tabs-section h3,
+  .tabs-section ul,
+  .tabs-section li {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  }
+  .tabs-section .tab-buttons button {
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    font-size: 1.1em;
+    padding: 10px 20px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .tabs-section .tab-buttons button:hover {
+    background: white;
+    color: var(--primary-color);
+  }
+  .tabs-section .tab-buttons button.active {
+    background: white;
+    color: var(--primary-color);
+  }
+  .tabs-section .tab-content ul {
+    margin-left: 20px;
+  }
+  .tabs-section .diff-button {
+    background-color: white;
+    color: var(--primary-color);
+    border: 2px solid white;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .tabs-section .diff-button:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  /* También se definen estilos para los botones de tabs por defecto */
   .tab-buttons {
     margin-bottom: 20px;
     text-align: center;
   }
-  /* Botones de pestañas en negro */
   .tab-buttons button {
     padding: 10px 20px;
     border: 1px solid #000;
-    background: #000; /* Negro */
+    background: #000;
     color: #fff;
     cursor: pointer;
     margin: 0 10px;
     transition: background-color 0.3s;
   }
   .tab-buttons button:hover {
-    background: #333; /* Gris oscuro */
+    background: #333;
   }
   .tab-buttons button.active {
-    background: #333; /* Gris oscuro */
+    background: #333;
     color: #fff;
   }
   .tab-content {
@@ -326,322 +584,44 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Inicio">
   <!-- HERO SECTION -->
   <section class="hero section">
-    <!-- Slider de imágenes de fondo -->
     <div class="hero__image-slider">
       <img src="/public/PANTALLA1.webp" alt="Fondo 1" class="hero__image active">
       <img src="/public/PANTALLA2.webp" alt="Fondo 2" class="hero__image">
       <img src="/public/PANTALLA3.webp" alt="Fondo 3" class="hero__image">
-      
-      <!-- Flechas de navegación -->
       <button class="hero__nav-button hero__nav-button--prev">‹</button>
       <button class="hero__nav-button hero__nav-button--next">›</button>
-      
-      <!-- Contenedor de puntos -->
       <div class="hero__dots-container">
         <span class="hero__dot active"></span>
         <span class="hero__dot"></span>
         <span class="hero__dot"></span>
       </div>
     </div>
-
     <div class="container">
       <h1 class="section-title">Transformando la Educación con Tecnología Interactiva</h1>
       <p>Especialistas en Pizarras Interactivas y soluciones multimedia para una educación moderna y efectiva.</p>
-      <!-- Botón del hero en negro -->
     </div>
-
     <div class="hero__content">
-      <!-- Contenedor que simula un botón para reproducir el video -->
       <div class="video-button" id="open-video" role="button" tabindex="0">
         <video autoplay loop muted playsinline class="video-button__video">
-          <source src="/12345.mp4" type="video/mp4" />
-          Tu navegador no soporta el elemento de video.
+          <source src="/12345.mp4" type="video/mp4">
+          Tu navegador no soporta el video.
         </video>
-        <img src="/svg2.svg" alt="Ícono de video" class="video-button__icon" />
+        <img src="/svg2.svg" alt="Ícono de video" class="video-button__icon">
       </div>
     </div>
-
-    <!-- Lightbox para el video -->
     <div id="video-lightbox" class="video-lightbox">
       <div class="video-container">
         <button class="close-button" id="close-video">×</button>
-        <video id="lightbox-video" width="100%" height="auto" controls>
-          <source src="/12345.mp4" type="video/mp4" />
-          Tu navegador no soporta el elemento de video.
+        <video id="lightbox-video" controls width="100%" height="auto">
+          <source src="/12345.mp4" type="video/mp4">
+          Tu navegador no soporta el video.
         </video>
       </div>
     </div>
-
-    <style>
-      /* Estilos del hero */
-      .hero {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-      }
-      /* Slider de imágenes de fondo */
-      .hero__image-slider {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 5;
-      }
-      .hero__image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-      }
-      .hero__image.active {
-        opacity: 1;
-      }
-      .hero__nav-button {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.5);
-        border: none;
-        font-size: 2rem;
-        padding: 1rem;
-        cursor: pointer;
-        z-index: 10;
-      }
-      .hero__nav-button--prev {
-        left: 1rem;
-      }
-      .hero__nav-button--next {
-        right: 1rem;
-      }
-      .hero__dots-container {
-        position: absolute;
-        bottom: 2rem;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        gap: 1rem;
-        z-index: 10;
-      }
-      .hero__dot {
-        width: 1rem;
-        height: 1rem;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.5);
-        cursor: pointer;
-      }
-      .hero__dot.active {
-        background: white;
-      }
-      .hero__content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 20;
-      }
-      /* Estilos del contenedor que simula el botón de video */
-      .video-button {
-        position: relative;
-        width: 160px;
-        height: 50px;
-        overflow: hidden;
-        border-radius: 25px;
-        cursor: pointer;
-        background-color: rgba(255, 255, 255, 0.3);
-        transition: all 0.3s ease;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      .video-button:hover {
-        background-color: rgba(255, 255, 255, 0.5);
-        transform: scale(1.05);
-      }
-      .video-button__video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-      .video-button__icon {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 1.5rem;
-        height: 1.5rem;
-        filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.7));
-        pointer-events: none;
-      }
-      /* Estilos del lightbox */
-      .video-lightbox {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        z-index: 1001;
-        align-items: center;
-        justify-content: center;
-      }
-      .video-lightbox.show {
-        display: flex;
-      }
-      .video-container {
-        position: relative;
-        width: 90%;
-        max-width: 800px;
-        background: #000;
-        border-radius: 10px;
-        overflow: hidden;
-        aspect-ratio: 16 / 9;
-      }
-      .video-container video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .close-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 2rem;
-        cursor: pointer;
-        z-index: 1002;
-      }
-    </style>
-
-    <script client:load>
-      // Se utiliza client:load para ejecutar el script en el cliente
-      function initHero() {
-        console.log("initHero se ha inicializado");
-        
-        /* ==============================
-           Funcionalidad del Video & Lightbox
-           ============================== */
-        const videoButton = document.getElementById('open-video');
-        const videoLightbox = document.getElementById('video-lightbox');
-        const closeButton = document.getElementById('close-video');
-        const lightboxVideo = document.getElementById('lightbox-video');
-
-        if (videoButton && videoLightbox && closeButton && lightboxVideo) {
-          videoButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            console.log("Se hizo clic en el contenedor del video");
-            videoLightbox.classList.add('show');
-            lightboxVideo.currentTime = 0; // Reinicia el video
-            lightboxVideo.play();
-            // Solicitar pantalla completa en el contenedor del lightbox
-            if (videoLightbox.requestFullscreen) {
-              videoLightbox.requestFullscreen();
-            } else if (videoLightbox.webkitRequestFullscreen) {
-              videoLightbox.webkitRequestFullscreen();
-            } else if (videoLightbox.msRequestFullscreen) {
-              videoLightbox.msRequestFullscreen();
-            }
-          });
-        
-          closeButton.addEventListener('click', () => {
-            console.log("Se hizo clic en el botón de cerrar");
-            videoLightbox.classList.remove('show');
-            lightboxVideo.pause();
-            if (document.fullscreenElement) {
-              document.exitFullscreen();
-            } else if (document.webkitFullscreenElement) {
-              document.webkitExitFullscreen();
-            } else if (document.msFullscreenElement) {
-              document.msExitFullscreen();
-            }
-          });
-        
-          videoLightbox.addEventListener('click', (e) => {
-            if (e.target === videoLightbox) {
-              console.log("Se hizo clic fuera del contenedor de video");
-              videoLightbox.classList.remove('show');
-              lightboxVideo.pause();
-              if (document.fullscreenElement) {
-                document.exitFullscreen();
-              } else if (document.webkitFullscreenElement) {
-                document.webkitExitFullscreen();
-              } else if (document.msFullscreenElement) {
-                document.msExitFullscreen();
-              }
-            }
-          });
-        } else {
-          console.error("No se encontraron uno o más elementos necesarios para el video.");
-        }
-        
-        /* ==============================
-           Funcionalidad del Slider de Imágenes
-           ============================== */
-        const sliderImages = document.querySelectorAll('.hero__image');
-        const nextButton = document.querySelector('.hero__nav-button--next');
-        const prevButton = document.querySelector('.hero__nav-button--prev');
-        const dots = document.querySelectorAll('.hero__dot');
-        let currentSlide = 0;
-        
-        function showSlide(index) {
-          sliderImages.forEach((img, i) => {
-            img.classList.toggle('active', i === index);
-          });
-          dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-          });
-          currentSlide = index;
-        }
-        
-        function nextSlide() {
-          let next = currentSlide + 1;
-          if (next >= sliderImages.length) {
-            next = 0;
-          }
-          showSlide(next);
-        }
-        
-        function prevSlide() {
-          let prev = currentSlide - 1;
-          if (prev < 0) {
-            prev = sliderImages.length - 1;
-          }
-          showSlide(prev);
-        }
-        
-        if (nextButton) {
-          nextButton.addEventListener('click', nextSlide);
-        }
-        if (prevButton) {
-          prevButton.addEventListener('click', prevSlide);
-        }
-        
-        dots.forEach((dot, index) => {
-          dot.addEventListener('click', () => {
-            showSlide(index);
-          });
-        });
-        
-        // Cambio automático de slide cada 5 segundos
-        setInterval(nextSlide, 5000);
-      }
-
-      // Inicializar el hero cuando el DOM esté completamente cargado
-      document.addEventListener('DOMContentLoaded', initHero);
-    </script>
+    <!-- Estilos internos específicos del hero (no se deben anidar múltiples bloques en Astro, se han integrado aquí en el bloque principal) -->
   </section>
 
-  <!-- CARACTERÍSTICAS (50% texto – 50% imagen) -->
+  <!-- SECCIÓN: CARACTERÍSTICAS (50% texto – 50% imagen) -->
   <section class="section gradient">
     <div class="container">
       <div class="caracteristicas">
@@ -655,7 +635,7 @@ import Layout from '../layouts/Layout.astro';
             <li>Tecnología PnP: Enchufar USB y usar.</li>
             <li>Intuitiva, enfocada a la facilidad de uso.</li>
             <li>Software de creación de clase potente e interactivo.</li>
-            <li>20 botones de accesos directos, ¡Y mucho más!...</li>
+            <li>20 botones de accesos directos, ¡Y mucho más!</li>
           </ul>
         </div>
         <div class="image">
@@ -665,7 +645,7 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- ¿CÓMO FUNCIONA UNA PDI? -->
+  <!-- SECCIÓN: ¿CÓMO FUNCIONA UNA PDI? -->
   <section class="section">
     <div class="container">
       <h1 class="section-title">¿Cómo funciona una PDI?</h1>
@@ -686,14 +666,13 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
       </div>
-      <!-- Botón para ver detalles de funcionamiento, que dirige a la página pdiPizarra.astro -->
-      <div style="text-align: center; margin-top: 2rem;">
+      <div style="text-align:center; margin-top:2rem;">
         <a href="/productos/pdiPizarra" class="diff-button">Ver detalles</a>
       </div>
     </div>
   </section>
 
-  <!-- DIMENSIONES, FORMATOS, TAMAÑOS (50% texto – 50% imagen) -->
+  <!-- SECCIÓN: DIMENSIONES, FORMATOS, TAMAÑOS (50% texto – 50% imagen) -->
   <section class="section gradient">
     <div class="container">
       <div class="dimensiones">
@@ -711,50 +690,43 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- DIFERENCIAS ENTRE PRODUCTOS (ICONOS alineados horizontalmente, con botones) -->
+  <!-- SECCIÓN: DIFERENCIAS ENTRE PRODUCTOS -->
   <section class="section">
     <div class="container">
-      <!-- Título más pequeño -->
       <h2 class="diff-title">Diferencia entre una Pizarra interactiva, monitor interactivo, proyector interactivo, módulo interactivo y accesorio interactivo</h2>
       <p class="diff-subtitle">Tenemos diferencias sustanciales entre estos productos:</p>
       <div class="differences">
         <div class="items">
-          <!-- Pizarras Interactivas -->
           <div class="item">
             <span>🖥️</span>
             <h4>Pizarras Interactivas</h4>
             <p>Necesita Proyector<br>Necesita CPU<br>...</p>
             <a href="/productos/pizarras" class="diff-button">Ver Producto</a>
           </div>
-          <!-- Pantallas Interactivas -->
           <div class="item">
             <span>📺</span>
             <h4>Pantallas Interactivas</h4>
             <p>Necesita Proyector<br>Necesita CPU<br>...</p>
             <a href="/productos/pantallas" class="diff-button">Ver Producto</a>
           </div>
-          <!-- Proyector Interactivo -->
           <div class="item">
             <span>📽️</span>
             <h4>Proyector Interactivo</h4>
             <p>Fuente el mismo Proyector<br>Necesita CPU<br>...</p>
             <a href="/productos/proyector" class="diff-button">Ver Producto</a>
           </div>
-          <!-- Pantalla de Proyección -->
           <div class="item">
             <span>🎬</span>
             <h4>Pantalla de Proyección</h4>
             <p>Detalles breves...<br>Detalles breves...<br>...</p>
             <a href="/productos/ecran" class="diff-button">Ver Producto</a>
           </div>
-          <!-- Pedestales -->
           <div class="item">
             <span>🏗️</span>
             <h4>Pedestales</h4>
             <p>Detalles breves...<br>Detalles breves...<br>...</p>
             <a href="/productos/pedestales" class="diff-button">Ver Producto</a>
           </div>
-          <!-- Rack Empotrado -->
           <div class="item">
             <span>📦</span>
             <h4>Rack Empotrado</h4>
@@ -766,7 +738,7 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- PRECIO PIZARRA INTERACTIVA (50% imagen – 50% texto) -->
+  <!-- SECCIÓN: PRECIO PIZARRA INTERACTIVA (50% imagen – 50% texto) -->
   <section class="section gradient">
     <div class="container">
       <div class="precio">
@@ -783,7 +755,8 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
   </section>
-  <!-- GALERÍA -->
+
+  <!-- SECCIÓN: GALERÍA -->
   <section class="section gallery-section">
     <div class="container">
       <h1 class="section-title">Galería</h1>
@@ -814,15 +787,12 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
     </div>
-
-    <!-- Lightbox para ampliar imágenes -->
     <div class="lightbox" id="lightbox">
       <span class="close" id="lightbox-close">&times;</span>
       <img class="lightbox-content" id="lightbox-content">
     </div>
-
     <style>
-      /* Sección de Galería */
+      /* Ajustes específicos para la sección de galería */
       .gallery-section {
         padding: 2rem 0;
         background: #f9f9f9;
@@ -838,75 +808,7 @@ import Layout from '../layouts/Layout.astro';
         gap: 15px;
         margin-top: 2rem;
       }
-      .gallery-item {
-        position: relative;
-        overflow: hidden;
-        aspect-ratio: 16 / 9;
-        border-radius: 8px;
-        cursor: pointer;
-      }
-      .gallery-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.4s ease;
-      }
-      .gallery-item:hover img {
-        transform: scale(1.1);
-      }
-      .overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.2);
-        opacity: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: opacity 0.4s ease;
-      }
-      .gallery-item:hover .overlay {
-        opacity: 1;
-      }
-      .overlay span {
-        color: #fff;
-        font-size: 1.2rem;
-        letter-spacing: 1px;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 8px 16px;
-        border-radius: 4px;
-        text-transform: uppercase;
-      }
-
-      /* Estilos del Lightbox */
-      .lightbox {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-      }
-      .lightbox-content {
-        max-width: 90%;
-        max-height: 90%;
-        border-radius: 8px;
-        object-fit: contain;
-      }
-      .close {
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        font-size: 2.5rem;
-        color: #fff;
-        cursor: pointer;
-        z-index: 1001;
-      }
     </style>
-
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const galleryItems = document.querySelectorAll('.gallery-item');
@@ -935,8 +837,8 @@ import Layout from '../layouts/Layout.astro';
     </script>
   </section>
 
-  <!-- TABS: DOCENTES / ALUMNOS -->
-  <section class="section">
+  <!-- SECCIÓN: DOCENTES / ALUMNOS con fondo degradado personalizado -->
+  <section class="section tabs-section">
     <div class="container">
       <h1 class="section-title">Docentes / Alumnos</h1>
       <div class="tabs">
@@ -956,7 +858,7 @@ import Layout from '../layouts/Layout.astro';
             <li>Incrementa la motivación y la autoestima del profesor al descubrir nuevas posibilidades metodológicas.</li>
           </ul>
         </div>
-        <div id="beneficios-alumnos" class="tab-content" style="display:none;">
+        <div id="beneficios-alumnos" class="tab-content" style="display: none;">
           <h3>Beneficios de la pizarra interactiva para alumnos</h3>
           <ul>
             <li>Aumento de la motivación y del aprendizaje.</li>
@@ -992,4 +894,80 @@ import Layout from '../layouts/Layout.astro';
       btnAlumnos.classList.add('active');
     }
   }
+
+  // Inicialización del slider del hero, lightbox del video y galería
+  document.addEventListener('DOMContentLoaded', () => {
+    // Slider del hero
+    const sliderImages = document.querySelectorAll('.hero__image');
+    const nextButton = document.querySelector('.hero__nav-button--next');
+    const prevButton = document.querySelector('.hero__nav-button--prev');
+    const dots = document.querySelectorAll('.hero__dot');
+    let currentSlide = 0;
+    function showSlide(index) {
+      sliderImages.forEach((img, i) => img.classList.toggle('active', i === index));
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+      currentSlide = index;
+    }
+    function nextSlide() {
+      let next = currentSlide + 1;
+      if (next >= sliderImages.length) next = 0;
+      showSlide(next);
+    }
+    function prevSlide() {
+      let prev = currentSlide - 1;
+      if (prev < 0) prev = sliderImages.length - 1;
+      showSlide(prev);
+    }
+    nextButton && nextButton.addEventListener('click', nextSlide);
+    prevButton && prevButton.addEventListener('click', prevSlide);
+    dots.forEach((dot, index) => dot.addEventListener('click', () => showSlide(index)));
+    setInterval(nextSlide, 5000);
+
+    // Funcionalidad del video y lightbox
+    const videoButton = document.getElementById('open-video');
+    const videoLightbox = document.getElementById('video-lightbox');
+    const closeButton = document.getElementById('close-video');
+    const lightboxVideo = document.getElementById('lightbox-video');
+    videoButton &&
+      videoButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        videoLightbox.classList.add('show');
+        lightboxVideo.currentTime = 0;
+        lightboxVideo.play();
+      });
+    closeButton &&
+      closeButton.addEventListener('click', () => {
+        videoLightbox.classList.remove('show');
+        lightboxVideo.pause();
+      });
+    videoLightbox &&
+      videoLightbox.addEventListener('click', (e) => {
+        if (e.target === videoLightbox) {
+          videoLightbox.classList.remove('show');
+          lightboxVideo.pause();
+        }
+      });
+
+    // Funcionalidad de la galería
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxContent = document.getElementById('lightbox-content');
+    const lightboxClose = document.getElementById('lightbox-close');
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const imgSrc = item.querySelector('img').src;
+        lightboxContent.src = imgSrc;
+        lightbox.style.display = 'flex';
+      });
+    });
+    lightboxClose && lightboxClose.addEventListener('click', () => {
+      lightbox.style.display = 'none';
+    });
+    lightbox &&
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+          lightbox.style.display = 'none';
+        }
+      });
+  });
 </script>
